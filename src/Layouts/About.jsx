@@ -29,8 +29,8 @@ const About = () => {
           transition={{ duration: 0.8 }}
           className="flex-1 space-y-4 flex flex-col justify-start min-h-[300px]"
         >
-          <h2 className="text-5xl text-center md:text-start font-bold text-spotify">
-            About Me
+          <h2 className="text-5xl font-extrabold mb-4">
+            <span className="text-spotify">About</span> Me
           </h2>
           <p className="text-base-content text-justif">
             "I'm a front-end developer with a strong foundation in HTML, CSS,
@@ -46,7 +46,9 @@ const About = () => {
       </div>
       <div className="text-center">
         <Button>
-          More about me <BsArrowRight />
+          <span className="flex items-center gap-2">
+            More about me <BsArrowRight />
+          </span>{" "}
         </Button>
       </div>
     </div>

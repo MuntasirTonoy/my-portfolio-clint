@@ -60,7 +60,7 @@ const Contact = () => {
         <h2 className="text-4xl md:text-5xl font-bold text-spotify mb-8">
           Contact
         </h2>
-        <ul className="space-y-6">
+        <ul className="space-y-5">
           {contactInfo.map((item, index) => (
             <li
               key={index}

@@ -102,11 +102,15 @@ const Navbar = () => {
       </div>
 
       {/* Theme Toggle */}
-      <div className="navbar-end gap-2">
-        <Button>
-          {" "}
-          Resume <FiDownload />{" "}
-        </Button>
+      <div className="navbar-end gap-2 ">
+        <div className="hidden md:block">
+          <Button>
+            {" "}
+            <span className="flex items-center gap-2">
+              Resume <FiDownload />
+            </span>
+          </Button>
+        </div>
         <button
           onClick={toggleTheme}
           className="btn btn-ghost text-xl"
