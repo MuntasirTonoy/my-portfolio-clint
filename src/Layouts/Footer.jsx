@@ -3,7 +3,14 @@ import React from "react";
 const Footer = () => {
   return (
     <div>
-      <h1>im footer</h1>
+      <footer className="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
+        <aside>
+          <p>
+            Copyright © {new Date().getFullYear()} - All right reserved by{" "}
+            <span className="font-semibold">Md Muntasir Mashmud (Tonoy)</span>
+          </p>
+        </aside>
+      </footer>
     </div>
   );
 };

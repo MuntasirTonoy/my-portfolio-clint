@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { FaMoon } from "react-icons/fa";
-import { LuSun } from "react-icons/lu";
 import { Link } from "react-scroll";
-import whiteLogo from "../assets/white-logo.png";
-import blackLogo from "../assets/black-logo.png";
+import whiteLogo from "../assets/logo/white-logo.png";
+import blackLogo from "../assets/logo/black-logo.png";
 import { FiDownload } from "react-icons/fi";
 import Button from "../Components/Button";
+import Switch from "../Components/Switch";
 
 const Navbar = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "light";
+  });
 
-  const navItems = ["about", "skills", "projects", "contact"];
+  const navItems = ["about", "skills", "service", "projects", "contact"];
 
   useEffect(() => {
     document.querySelector("html").setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   return (
     <div
-      className={`navbar bg-base-100 shadow-md fixed z-50 top-0 w-full lg:px-10 transition-transform duration-300  `}
+      className={`navbar bg-transparent   backdrop-blur-2xl  shadow-xs fixed z-50 top-0  w-full lg:px-10 transition-transform duration-300  `}
     >
       <div className="navbar-start">
         {/* Mobile Dropdown */}
@@ -44,7 +46,7 @@ const Navbar = () => {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 max-w-[80vw] "
           >
             {navItems.map((item) => (
               <li key={item}>
@@ -104,20 +106,16 @@ const Navbar = () => {
       {/* Theme Toggle */}
       <div className="navbar-end gap-2 ">
         <div className="hidden md:block">
-          <Button>
-            {" "}
-            <span className="flex items-center gap-2">
-              Resume <FiDownload />
-            </span>
-          </Button>
+          <a href="https://drive.google.com/uc?export=download&id=13zl3BQsdlwAsrhjQT8Yv8oC2KIZTDCnN">
+            <Button>
+              <span className="flex items-center gap-2">
+                Resume <FiDownload />
+              </span>
+            </Button>
+          </a>
         </div>
-        <button
-          onClick={toggleTheme}
-          className="btn btn-ghost text-xl"
-          aria-label="Toggle Theme"
-        >
-          {theme === "light" ? <FaMoon /> : <LuSun />}
-        </button>
+
+        <Switch theme={theme} toggleTheme={toggleTheme} />
       </div>
     </div>
   );

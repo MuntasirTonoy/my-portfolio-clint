@@ -16,7 +16,7 @@ const ProjectCard = ({ project }) => {
     <motion.div
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="relative group w-full max-w-md mx-auto bg-base-100 rounded-lg shadow-md overflow-hidden z-10"
+      className="relative group w-full max-w-md mx-auto bg-base-300 rounded-lg shadow-md overflow-hidden z-10"
     >
       {/* Animated Circle Background */}
       <motion.div

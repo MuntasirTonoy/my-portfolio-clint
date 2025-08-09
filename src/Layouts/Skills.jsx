@@ -22,7 +22,7 @@ const skills = [
       },
       {
         name: "CSS3",
-        icon: "https://cdn.simpleicons.org/css3/1572B6",
+        icon: "https://raw.githubusercontent.com/CSS-Next/logo.css/main/css.svg",
         proficiency: 90,
       },
       {
@@ -72,7 +72,7 @@ const skills = [
       },
       {
         name: "VS Code",
-        icon: "https://cdn.simpleicons.org/visualstudiocode/007ACC",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/2048px-Visual_Studio_Code_1.35_icon.svg.png",
         proficiency: 95,
       },
     ],
@@ -83,7 +83,7 @@ const Skills = () => {
   return (
     <div
       id="skills"
-      className="py-16 px-4 md:px-8 lg:px-20 bg-base-100 text-base-content min-h-screen"
+      className="mt-32 py-10 px-4 md:px-8 lg:px-20 bg-base-100 text-base-content min-h-screen"
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">

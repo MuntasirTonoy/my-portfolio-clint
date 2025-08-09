@@ -52,7 +52,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="min-h-screen  p-5 md:p-12 flex flex-col md:flex-row items-start justify-center gap-10"
+      className="min-h-screen  p-5 md:p-12 flex flex-col md:flex-row  justify-center items-center gap-10"
       aria-label="Contact section"
     >
       {/* Left: Contact Info */}

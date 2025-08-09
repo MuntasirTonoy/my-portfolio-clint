@@ -74,7 +74,7 @@ const Tabs = () => {
           <a
             key={tab.value}
             onClick={() => setActiveTab(tab.value)}
-            className={`tab tab-bordered text-lg cursor-pointer ${
+            className={`tab tab-bordered text-md md:text-lg cursor-pointer ${
               activeTab === tab.value
                 ? "tab-active border-3 border-b-green-400"
                 : "border-3 border-b-green-50/0"
@@ -86,7 +86,7 @@ const Tabs = () => {
       </div>
 
       {/* Tab Content */}
-      <div className="mt-6 space-y-6">
+      <div className="mt-6 space-y-6 min-h-64">
         {activeContent?.slice(0, 2).map((item, index) => (
           <div key={index}>
             <h3 className="text-lg font-semibold mb-1">{item.title}</h3>

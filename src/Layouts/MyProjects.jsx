@@ -1,5 +1,7 @@
 import React from "react";
 import ProjectCard from "../Components/ProjectCard";
+import Button from "../Components/Button";
+import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 
 const MyProjects = () => {
   const projectsData = [
@@ -11,6 +13,7 @@ const MyProjects = () => {
         "A developer forum where users can post, vote, and comment on tech topics. Built with the MERN stack and Firebase Auth.",
       tags: ["mern", "firebase", "forum"],
       status: "completed",
+      featured: true,
     },
     {
       image:
@@ -20,6 +23,7 @@ const MyProjects = () => {
         "Users can upload, search, and save recipes. Includes Firebase storage and JWT-based authentication.",
       tags: ["react", "tailwind", "firebase"],
       status: "working",
+      featured: true,
     },
     {
       image:
@@ -29,31 +33,40 @@ const MyProjects = () => {
         "A booking app for clients to schedule appointments with lawyers. Admin panel included for managing availability.",
       tags: ["react", "nodejs", "dashboard"],
       status: "completed",
+      featured: true,
     },
     {
       image:
         "https://lirp.cdn-website.com/a8ff2f1c/dms3rep/multi/opt/opengraph_1200x630+%282%29-1920w.png",
-      title: "Cafe Order App",
+      title: "Road Trip app",
       description:
         "Simple cafe POS system for placing and tracking snack/coffee orders. Built for mobile-first experience.",
       tags: ["mobile", "firebase", "tailwind"],
       status: "working",
+      featured: false,
     },
   ];
 
+  // Filter only featured projects
+  const featuredProjects = projectsData.filter(
+    (project) => project.featured === true
+  );
+
   return (
-    <div
-      id="projects"
-      className="min-h-screen bg-base-300 py-20 px-4 md:px-6 lg:px-8 "
-    >
+    <div id="projects" className="min-h-screen  py-20 px-4 md:px-6 lg:px-8 ">
       <h2 className="text-5xl text-center font-extrabold mb-10">
         <span className="text-spotify">Featured</span> Projects
       </h2>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-        {projectsData.map((project, index) => (
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center gap-x-8 gap-y-12">
+        {featuredProjects.map((project, index) => (
           <ProjectCard key={index} project={project} />
         ))}
+      </div>
+      <div className="text-center my-10">
+        <Button>
+          All Projects <HiOutlineArrowNarrowRight />{" "}
+        </Button>
       </div>
     </div>
   );

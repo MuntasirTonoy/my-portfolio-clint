@@ -23,7 +23,7 @@ const WordFlip = () => {
   }, []);
 
   return (
-    <div className="rounded-xl p-1 hidden md:block text-white font-poppins text-2xl w-fit">
+    <div className="rounded-xl p-1 hidden lg:block text-white font-poppins text-2xl w-fit">
       <div className="flex items-center gap-2">
         <span className="text-gray-400 whitespace-nowrap">An expert in</span>
         <div className="relative h-8 overflow-hidden text-spotify w-[220px]">

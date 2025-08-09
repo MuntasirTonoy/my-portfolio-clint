@@ -11,11 +11,10 @@ const Button = ({ children, onClick }) => {
       onHoverEnd={() => setIsHovered(false)}
       className="
         relative overflow-hidden 
-        border border-[#02b677] text-[#02b677]
-        font-medium text-[17px] rounded-md 
-        px-6 py-2 z-10 
+         border-[#02b677] text-[#02b677]
+      z-10 
         transition-colors duration-500 
-        hover:text-white
+        hover:text-white hover:shadow-none btn btn-soft btn-success
       "
     >
       {/* Animated Circle */}
