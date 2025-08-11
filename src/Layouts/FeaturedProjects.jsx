@@ -33,7 +33,7 @@ const FeaturedProjects = () => {
   }
 
   return (
-    <section className="min-h-screen py-20 px-4 md:px-6 lg:px-8">
+    <section className="px-4 md:px-6 lg:px-8">
       <h2 className="text-5xl text-center font-extrabold mb-10">
         <span className="text-spotify">Featured</span> Projects
       </h2>

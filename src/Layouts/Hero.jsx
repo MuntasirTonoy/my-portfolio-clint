@@ -7,10 +7,7 @@ import HeroPhoto from "../Components/HeroPhoto";
 
 const Hero = () => {
   return (
-    <div
-      id="hero"
-      className="hero bg-base-200 min-h-screen px-4 lg:px-20 py-20"
-    >
+    <div className="hero bg-base-200 min-h-screen px-4 lg:px-20">
       <div className="hero-content flex flex-col lg:flex-row items-center gap-8">
         {/* Text content stays second */}
         <div className="text-center order-2 lg:order-1 lg:text-left">

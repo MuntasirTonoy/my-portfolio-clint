@@ -58,10 +58,7 @@ const reviews = [
 
 const Testimonials = () => {
   return (
-    <section
-      id="testimonials"
-      className="py-12 sm:py-16 bg-base-100 overflow-hidden"
-    >
+    <section className="bg-base-100 overflow-hidden">
       <div className="max-w-6xl mx-auto px-4  lg:px-8">
         <div className="text-center mb-8 sm:mb-12">
           <h4 className="text-spotify font-bold text-sm sm:text-lg mb-2">

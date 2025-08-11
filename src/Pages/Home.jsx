@@ -9,13 +9,15 @@ import FeaturedProjects from "../Layouts/FeaturedProjects";
 const Home = () => {
   return (
     <>
-      <Hero />
-      <About />
-      <Skills />
-      <Service />
-      <FeaturedProjects />
-      <Testimonials />
-      {/* <Certificates /> */}
+      <div className="space-y-40 my-10">
+        <Hero />
+        <About />
+        <Skills />
+        <Service />
+        <FeaturedProjects />
+        <Testimonials />
+        {/* <Certificates /> */}
+      </div>
     </>
   );
 };

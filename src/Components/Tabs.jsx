@@ -92,15 +92,6 @@ const Tabs = () => {
       </div>
 
       {/* Button with responsive margin */}
-      <div className="text-center lg:text-start">
-        <Link to="/about">
-          <Button>
-            <span className=" flex items-center gap-2">
-              More about me <BsArrowRight />
-            </span>
-          </Button>
-        </Link>
-      </div>
     </div>
   );
 };

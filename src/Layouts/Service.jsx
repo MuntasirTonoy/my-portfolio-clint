@@ -31,13 +31,13 @@ const services = [
 ];
 
 const Services = () => (
-  <section id="service" className="py-16 bg-base-100  min-h-screen">
+  <section className="bg-base-100">
     <div className="max-w-6xl mx-auto px-4">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Left: Intro */}
-        <div>
+        <div className="mx-3">
           <h4 className="text-spotify font-bold text-lg mb-2">SERVICES</h4>
-          <h2 className="text-4xl font-extrabold leading-snug mb-4">
+          <h2 className="text-4xl font-extrabold  mb-4">
             How I Help You To <br /> Build Your Product
           </h2>
           <p className="text-base-content leading-relaxed">
@@ -46,7 +46,7 @@ const Services = () => (
         </div>
 
         {/* Right: Services */}
-        <div className="lg:col-span-2 grid sm:grid-cols-2 gap-10">
+        <div className="lg:col-span-2 grid sm:grid-cols-2 gap-5 lg:gap-10">
           {services.map(({ icon, title, description }, index) => (
             <ServiceCard
               key={index}
