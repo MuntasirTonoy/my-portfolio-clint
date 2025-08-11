@@ -1,6 +1,5 @@
 import React from "react";
 import { FaCode, FaServer, FaDatabase, FaMobileAlt } from "react-icons/fa";
-import Testimonials from "../Components/Testimonial";
 import ServiceCard from "../Components/ServiceCard";
 const serviceDescription =
   " I build your product with responsive design, clean code, and a focus on user experience, ensuring a seamless and engaging interface. My full-stack expertise lets me handle projects from concept to deployment with efficiency and creativity.";
@@ -58,8 +57,6 @@ const Services = () => (
           ))}
         </div>
       </div>
-
-      <Testimonials />
     </div>
   </section>
 );

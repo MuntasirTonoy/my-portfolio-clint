@@ -10,9 +10,10 @@ const ErrorPage = () => {
         <Lottie animationData={errorAnimation} loop={true} />
       </div>
 
-      <h1 className="text-4xl font-bold mt-6 mb-2">Oops! Page Not Found</h1>
+      <h1 className="text-4xl font-bold mt-6 mb-2">wait</h1>
       <p className="text-gray-500 mb-6">
-        The page you are looking for does not exist or has been moved.
+        {/* The page you are looking for does not exist or has been moved. */}
+        still working on this website, hold on
       </p>
 
       <Link

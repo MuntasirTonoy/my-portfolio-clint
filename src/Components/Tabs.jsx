@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Button from "./Button";
+import { BsArrowRight } from "react-icons/bs";
+import { Link } from "react-router";
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState("address");
@@ -15,7 +18,7 @@ const Tabs = () => {
         },
         {
           title: "Present Address",
-          description: "Facebook mess, Beside IU Club, Peyaratola, Kushtia.",
+          description: "Peyaratola, Kushtia.",
         },
         {
           title: "Other",
@@ -31,34 +34,19 @@ const Tabs = () => {
         {
           title: "HSC",
           description:
-            "I've completed my HSC from HHH College and then moved into front-end development as my passion for web technologies grew.",
+            "I've completed my HSC from 'Khulna Public College' with GPA 5.00 from science background.",
         },
         {
-          title: "SSC",
+          title: "Graduation",
           description:
-            "I completed my SSC from XYZ School with a strong academic record in science and mathematics.",
+            "Currently I'm pursuing my graduation in Mathematics. Besides, I'm focusing on fullstack development.",
         },
       ],
     },
     {
       label: "Experiences",
       value: "experiences",
-      content: [
-        {
-          title: "Frontend Developer",
-          description:
-            "Worked on React-based projects, implemented responsive designs, and collaborated with teams for better UI/UX.",
-        },
-        {
-          title: "Intern",
-          description:
-            "Completed a 3-month internship focusing on Tailwind CSS and component-based development.",
-        },
-        {
-          title: "Hidden Experience",
-          description: "Should not show unless more than 2 allowed.",
-        },
-      ],
+      content: [],
     },
   ];
 
@@ -87,14 +75,31 @@ const Tabs = () => {
 
       {/* Tab Content */}
       <div className="mt-6 space-y-6 min-h-64">
-        {activeContent?.slice(0, 2).map((item, index) => (
-          <div key={index}>
-            <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
-            <p className="text-base md:line-clamp-4 y md:max-w-80">
-              {item.description}
-            </p>
-          </div>
-        ))}
+        {activeTab === "experiences" && activeContent?.length === 0 ? (
+          <p className="text-base pl-10 ">
+            I'm a fresher , <br /> seeking opportunities.
+          </p>
+        ) : (
+          activeContent?.slice(0, 2).map((item, index) => (
+            <div key={index}>
+              <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
+              <p className="text-base md:line-clamp-4 y md:max-w-80">
+                {item.description}
+              </p>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Button with responsive margin */}
+      <div className="text-center lg:text-start">
+        <Link to="/about">
+          <Button>
+            <span className=" flex items-center gap-2">
+              More about me <BsArrowRight />
+            </span>
+          </Button>
+        </Link>
       </div>
     </div>
   );

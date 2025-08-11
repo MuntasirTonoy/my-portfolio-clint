@@ -67,7 +67,9 @@ const Testimonials = () => {
           <h4 className="text-spotify font-bold text-sm sm:text-lg mb-2">
             TESTIMONIALS
           </h4>
-          <h2 className="text-2xl sm:text-3xl font-bold">What People Say</h2>
+          <h2 className="text-2xl sm:text-5xl font-extrabold">
+            What <span className="text-spotify">People</span> Say
+          </h2>
         </div>
 
         <Swiper

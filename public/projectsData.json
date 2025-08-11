@@ -1,0 +1,93 @@
+[
+  {
+    "id": 1,
+    "image": "https://i.ibb.co.com/tRvN5qX/Screenshot-2025-08-11-111402.png",
+    "title": "Dev Connect | Developers Forum",
+    "description": "A fully responsive MERN stack developer forum with Firebase authentication, voting system, role-based dashboards, and Stripe-powered membership upgrades.",
+    "tech": {
+      "frontend": ["React", "Tailwind CSS"],
+      "backend": ["Node.js", "Express", "MongoDB"],
+      "other": ["Firebase", "Stripe", "JWT"]
+    },
+    "tags": ["forum", "mern", "firebase"],
+    "status": "completed",
+    "featured": true,
+    "started": "Jan 2025",
+    "end": "Feb 2025",
+    "keyFeature": [
+      "Post creation with markdown editor",
+      "Upvote/downvote system",
+      "JWT & Firebase authentication",
+      "Role-based dashboards (admin/user)",
+      "Stripe membership upgrade with badges",
+      "Tag-based search and post sharing"
+    ],
+    "challenges": "Ensuring seamless integration between Firebase authentication and custom JWT-based route protection while maintaining responsive performance on all devices.",
+    "improvements": "Add a real-time chat feature, improve post search with AI-based suggestions, and enable offline mode for better accessibility.",
+    "links": {
+      "liveDemo": "https://dev-connect-t7.web.app/",
+      "clientSide": "https://github.com/MuntasirTonoy/Dev-connect-clint",
+      "serverSide": "https://github.com/MuntasirTonoy/Dev-connect-server"
+    }
+  },
+  {
+    "id": 2,
+    "image": "https://i.ibb.co.com/zWFVkZrd/Screenshot-2025-08-11-111334.png",
+    "title": "WeVibe - Social Events Platform",
+    "description": "A community-driven platform for creating, joining, and tracking social service events like cleanups, tree plantations, and donation drives.",
+    "tech": {
+      "frontend": ["React", "Tailwind CSS"],
+      "backend": ["Node.js", "Express", "MongoDB"],
+      "other": ["Firebase", "Stripe"]
+    },
+    "tags": ["events", "community", "social"],
+    "status": "completed",
+    "featured": true,
+    "started": "Nov 2024",
+    "end": "Dec 2024",
+    "keyFeature": [
+      "Create, join, and manage events",
+      "Date-based filtering for future events",
+      "Search and filter by event type",
+      "JWT-protected private routes",
+      "Dark/Light theme toggle"
+    ],
+    "challenges": "Managing date-based filtering logic to only display upcoming events while keeping query performance fast.",
+    "improvements": "Introduce a map-based event locator, allow users to invite friends, and add in-app notifications for joined events.",
+    "links": {
+      "liveDemo": "https://we-vibe-t7.web.app/",
+      "clientSide": "https://github.com/MuntasirTonoy/Wevibe-clint",
+      "serverSide": "https://github.com/MuntasirTonoy/Wevibe-server"
+    }
+  },
+  {
+    "id": 3,
+    "image": "https://i.ibb.co.com/LdFPd0TY/Screenshot-2025-08-11-111502.png",
+    "title": "Recipe Book App",
+    "description": "A recipe management app for food lovers to add, update, and share recipes, discover trending dishes, and save favorites.",
+    "tech": {
+      "frontend": ["React", "Tailwind CSS"],
+      "backend": ["Node.js", "Express", "MongoDB"],
+      "other": ["Firebase", "Stripe"]
+    },
+    "tags": ["recipes", "food", "cooking"],
+    "status": "working",
+    "featured": true,
+    "started": "Oct 2024",
+    "end": "Nov 2024",
+    "keyFeature": [
+      "Add, update, and delete recipes",
+      "Top recipes section based on likes",
+      "Like and wishlist system",
+      "Cuisine-based filtering",
+      "Dark/Light mode toggle"
+    ],
+    "challenges": "Optimizing image uploads for recipe images while keeping storage costs low and ensuring fast load times.",
+    "improvements": "Add video recipe tutorials, AI-based ingredient suggestions, and advanced nutritional breakdown for each recipe.",
+    "links": {
+      "liveDemo": "https://recipe-book-t7.web.app/",
+      "clientSide": "https://github.com/MuntasirTonoy/Recipe-book-clint",
+      "serverSide": "https://github.com/MuntasirTonoy/Recipe-book-server"
+    }
+  }
+]

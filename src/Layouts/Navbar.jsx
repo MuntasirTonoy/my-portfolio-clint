@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-scroll";
 import whiteLogo from "../assets/logo/white-logo.png";
 import blackLogo from "../assets/logo/black-logo.png";
 import { FiDownload } from "react-icons/fi";
 import Button from "../Components/Button";
 import Switch from "../Components/Switch";
+import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme") || "light";
   });
 
-  const navItems = ["about", "skills", "service", "projects", "contact"];
+  const navItems = ["about", "projects", "contact"];
 
   useEffect(() => {
     document.querySelector("html").setAttribute("data-theme", theme);
@@ -24,7 +24,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`navbar bg-transparent   backdrop-blur-2xl  shadow-xs fixed z-50 top-0  w-full lg:px-10 transition-transform duration-300  `}
+      className={`navbar bg-transparent  backdrop-blur-2xl  shadow-xs fixed z-50 top-0  w-full lg:px-10 transition-transform duration-300  `}
     >
       <div className="navbar-start">
         {/* Mobile Dropdown */}
@@ -50,17 +50,9 @@ const Navbar = () => {
           >
             {navItems.map((item) => (
               <li key={item}>
-                <Link
-                  to={item}
-                  smooth={true}
-                  duration={500}
-                  offset={-70}
-                  spy={true}
-                  activeClass="active"
-                  className="capitalize cursor-pointer"
-                >
+                <NavLink to={item} className="capitalize cursor-pointer">
                   {item}
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>
@@ -69,7 +61,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link
           className="ml-2 cursor-pointer"
-          to="hero"
+          to="/"
           smooth={true}
           duration={500}
           offset={-70}
@@ -87,17 +79,9 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">
           {navItems.map((item) => (
             <li key={item}>
-              <Link
-                to={item}
-                smooth={true}
-                duration={500}
-                offset={-70}
-                spy={true}
-                activeClass="active"
-                className="capitalize cursor-pointer"
-              >
+              <NavLink to={item} className="capitalize cursor-pointer">
                 {item}
-              </Link>
+              </NavLink>
             </li>
           ))}
         </ul>

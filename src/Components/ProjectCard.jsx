@@ -9,25 +9,26 @@ const statusColors = {
 };
 
 const ProjectCard = ({ project }) => {
-  const { image, title, description, tags, status, id } = project;
+  const { id, image, title, description, status } = project;
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="relative group w-full max-w-md mx-auto bg-base-300 rounded-lg shadow-md overflow-hidden z-10"
+      className="relative group w-full max-w-md mx-auto bg-base-300 rounded-lg border border-base-300 overflow-hidden z-10 flex flex-col"
+      style={{ minHeight: "420px" }} // enforce min height for uniformity
     >
-      {/* Animated Circle Background */}
+      {/* Animated Circle Background - Desktop only */}
       <motion.div
         initial={{ top: "100%", left: "100%" }}
         animate={
           isHovered
-            ? { top: "150px", left: "150px" }
+            ? { top: "200px", left: "200px" }
             : { top: "100%", left: "100%" }
         }
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="absolute w-96 h-96 bg-[#02b677] opacity-90 rounded-full z-10"
+        className="hidden lg:block absolute w-96 h-96 bg-[#02b677] opacity-90 rounded-full z-10"
       />
 
       {/* Top tool section */}
@@ -38,15 +39,15 @@ const ProjectCard = ({ project }) => {
       </div>
 
       {/* Content */}
-      <div className="p-4 space-y-3">
+      <div className="p-4 flex flex-col flex-grow space-y-3">
         <img
           src={image}
           alt={title}
-          className="w-full h-40 object-cover rounded-md"
+          className="w-full h-40 object-cover rounded-md flex-shrink-0"
         />
 
         <div className="flex justify-between items-center">
-          <h2 className="text-lg font-semibold text-base-content">{title}</h2>
+          <h2 className="text-xl font-bold text-base-content">{title}</h2>
           <span
             className={`text-xs px-2 py-1 rounded-full font-medium capitalize ${statusColors[status]}`}
           >
@@ -54,24 +55,24 @@ const ProjectCard = ({ project }) => {
           </span>
         </div>
 
-        <p className="text-sm text-base-content line-clamp-2">{description}</p>
+        <p className="text-sm text-base-content line-clamp-2 flex-grow">
+          {description}
+        </p>
 
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag, idx) => (
-            <span
-              key={idx}
-              className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full"
-            >
-              #{tag}
-            </span>
-          ))}
+        {/* Mobile View Button inside padding with margin-top auto to push it down */}
+        <div className="lg:hidden mt-auto pt-4">
+          <Link to={`/project/${id}`}>
+            <button className="btn btn-sm rounded-full btn-soft btn-success text-spotify w-full flex items-center justify-center gap-2">
+              View <FiArrowRight size={20} />
+            </button>
+          </Link>
         </div>
       </div>
 
-      {/* Animated Arrow Link */}
+      {/* Animated Arrow Link - Desktop only */}
       <Link
-        to={`/projects/${id}`}
-        className="absolute bottom-15 right-20 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 bg-white text-spotify p-2 rounded-full shadow-md z-20 "
+        to={`/project/${id}`}
+        className="hidden lg:flex absolute bottom-15 right-15 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 bg-white text-spotify p-2 rounded-full shadow-md z-20"
       >
         <FiArrowRight size={20} />
       </Link>
