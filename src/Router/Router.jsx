@@ -5,6 +5,7 @@ import ProjectDetails from "../Pages/ProjectDetails";
 import Home from "../Pages/Home";
 import AllProjects from "../Pages/AllProjects";
 import AboutPage from "../Pages/AboutPage";
+import ContactPage from "../Pages/ContactPage";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
+
       {
         path: "project/:id",
         element: <ProjectDetails />,
@@ -28,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "about",
         element: <AboutPage />,
+      },
+      {
+        path: "contact",
+        element: <ContactPage />,
       },
     ],
   },

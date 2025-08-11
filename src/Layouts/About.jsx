@@ -107,11 +107,17 @@ const About = () => {
             <span className="text-spotify">About</span> Me
           </h2>
           <p className="text-base-content text-justify text-sm sm:text-base">
-            I'm a front-end developer with a strong foundation in HTML, CSS, and
-            JavaScript. I focus on creating clean, responsive, and accessible
-            websites that provide a seamless user experience. I'm passionate
-            about web design and continuously learning to improve my skills,
-            bringing creative ideas to life through code.
+            I’m a passionate front-end developer with a solid foundation in
+            HTML, CSS, and JavaScript, dedicated to crafting clean, responsive,
+            and accessible websites. My work is driven by a commitment to
+            delivering seamless user experiences that balance aesthetics with
+            functionality. I have a keen eye for detail, ensuring every design
+            element aligns with modern web standards. Beyond coding, I’m deeply
+            interested in UI/UX principles, and I continuously explore new
+            tools, frameworks, and techniques to stay ahead in the ever-evolving
+            world of web development. My goal is to transform creative concepts
+            into engaging, user-friendly digital solutions that leave a lasting
+            impact.
           </p>
 
           {/* Tabs rendered here */}

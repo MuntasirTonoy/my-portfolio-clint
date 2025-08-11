@@ -6,19 +6,39 @@ import {
   FaPhone,
   FaWhatsapp,
   FaClock,
+  FaLocationArrow,
 } from "react-icons/fa";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { Link } from "react-router";
 import Button from "../Components/Button";
+const educationData = [
+  {
+    level: "HSC (Science)",
+    institution: "Khulna Public College",
+    year: "2020",
+    result: "GPA 5.00",
+  },
+  {
+    level: "B.Sc in Mathematics",
+    institution: "Government College, Kushtia",
+    year: "2021 - Present",
+    result: "Current CGPA: 3.85",
+  },
+  {
+    level: "M.Sc in Mathematics",
+    institution: "Planned for Future",
+    year: "Upcoming",
+    result: "N/A",
+  },
+];
 
 const aboutData = {
   aboutMe: {
-    name: "Md Munatsir Mahmud",
+    name: "Md Munatsir Mahmud (Tonoy) ",
     designation: "Full Stack Developer",
     location: "Kushtia, Bangladesh",
     experience: "2+ Years of Experience",
-    availability: "Available for new opportunities",
-    introduction: `Hi, I'm MD Munatsir MMahmud. My programming journey began after completing my degree in Physics, where I realized my passion for creating digital solutions. I enjoy crafting responsive and scalable web applications that solve real-world problems. Outside of programming, I love exploring nature through hiking and capturing moments with photography. I believe in continuous learning, creativity, and a balanced life.`,
+    availability: "Available",
     professionalJourney: [
       {
         heading: "Who I Am",
@@ -26,11 +46,11 @@ const aboutData = {
       },
       {
         heading: "My Approach",
-        content: `Writing clean, maintainable code is my mantra. My background in Physics has honed my analytical and problem-solving skills, which I apply daily to solve complex development challenges. I'm passionate about learning new technologies and staying ahead.`,
+        content: `Writing clean, maintainable code is my mantra. My background in Physics has honed my analytical and problem-solving skills, which I apply daily to solve complex development challenges.`,
       },
       {
         heading: "Academic Background",
-        content: `While currently completing my Bachelor's degree in Mathematics, I find the structured, analytical approach of mathematical thinking perfectly complements my programming work. The problem-solving methodologies I'm mastering translate directly to writing efficient algorithms and debugging complex systems.`,
+        content: `While currently completing my Bachelor's degree in Mathematics, I find the structured, analytical approach of mathematical thinking perfectly complements my programming work.`,
       },
     ],
     journey: [
@@ -38,37 +58,39 @@ const aboutData = {
         year: 2021,
         title: "Academic Beginning & Discovery",
         description:
-          "Started my Bachelor's degree in Mathematics while simultaneously discovering my passion for programming. Began exploring basic coding concepts alongside my academic studies, finding parallels between mathematical logic and programming.",
+          "Embarked on my Bachelor's degree in Mathematics, which honed my problem-solving and analytical thinking skills. During this time, I was introduced to the world of programming, sparking a deep curiosity for technology and its potential to solve real-world problems.",
         iconColor: "text-green-400",
       },
       {
         year: "2022-2023",
         title: "Web Development Foundations",
         description:
-          "Dedicated myself to learning HTML, CSS, and JavaScript fundamentals. Built several basic websites to practice my skills, transitioning from academic theory to practical web building. This period marked my conversion from casual interest to serious pursuit of web development.",
+          "Focused on mastering the core building blocks of the web—HTML, CSS, and JavaScript. Developed an understanding of responsive design, semantic markup, and interactive UI behaviors, laying a strong foundation for future full-stack development.",
         iconColor: "text-blue-400",
       },
       {
-        year: 2024,
+        year: "2024-2025",
         title: "Structured Learning & Growth",
         description:
-          "Completed the Level 1 course from Programming Hero, gaining structured knowledge in modern web development. Expanded my understanding of responsive design, JavaScript frameworks, and development best practices while continuing my Mathematics degree.",
+          "Completed the Level 1 course from Programming Hero, which provided a structured approach to modern web development. Learned to work with frameworks, apply best coding practices, and collaborate on small-scale projects that simulated real-world workflows.",
         iconColor: "text-purple-400",
       },
       {
         year: "Present",
         title: "Continuous Improvement",
         description:
-          "Currently balancing my Mathematics studies with ongoing programming education. Focusing on mastering React, Next.js, and backend technologies to become a full-stack developer. Applying mathematical problem-solving approaches to optimize code and algorithms.",
+          "Actively balancing my Mathematics degree with ongoing programming projects and advanced learning. Exploring backend technologies, refining frontend skills, and contributing to personal and collaborative projects to expand both technical depth and creative problem-solving abilities.",
         iconColor: "text-yellow-400",
       },
     ],
+
     socialLinks: {
       github: "https://github.com/ranokraihan",
       linkedin: "https://linkedin.com/in/ranokraihan",
       email: "mailto:ranok@example.com",
-      resume: "https://example.com/ranok_raihan_resume.pdf",
-      whatsapp: "https://wa.me/1234567890",
+      resume:
+        "https://drive.google.com/uc?export=download&id=13zl3BQsdlwAsrhjQT8Yv8oC2KIZTDCnN",
+      whatsapp: "https://wa.me/+8801783424220",
     },
   },
 };
@@ -86,17 +108,17 @@ const AboutPage = () => {
   } = aboutData.aboutMe;
 
   return (
-    <section className="min-h-screen  font-sans p-8 md:p-16 max-w-7xl mx-auto mt-20">
+    <section className="min-h-screen font-sans p-8 md:p-16 max-w-7xl mx-auto mt-20">
+      {/* Two-column grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
         {/* Left Card */}
-        <div className="bg-base-300 rounded-xl p-8  flex flex-col items-center md:items-start text-center md:text-left">
+        <div className="bg-base-300 rounded-xl p-8 flex flex-col justify-center items-center md:items-start text-center md:text-left">
           <img
-            src="https://i.ibb.co.com/rR6w9b10/image.jpg" // Replace with your actual photo URL
+            src="https://i.ibb.co.com/rR6w9b10/image.jpg"
             alt={name}
-            className="w-40 h-40 rounded-full border-4 border-green-400 shadow-lg mb-6 object-cover"
+            className="w-40 h-40 rounded-full ring-4 ring-green-500 shadow-lg mb-6 object-cover"
           />
-
-          <h2 className="text-3xl font-bold ">{name}</h2>
+          <h2 className="text-3xl mb-2 font-bold">{name}</h2>
           <p className="text-spotify mb-4">{designation}</p>
 
           <div className="flex space-x-6 text-gray-400 mb-6 text-lg">
@@ -105,7 +127,7 @@ const AboutPage = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
-              className="hover:text-spotify transition"
+              className="hover:text-green-500 transition"
             >
               <FaGithub />
             </Link>
@@ -114,29 +136,29 @@ const AboutPage = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="hover:text-spotify transition"
+              className="hover:text-green-500 transition"
             >
               <FaLinkedin />
             </Link>
             <Link
               to={socialLinks.email}
               aria-label="Email"
-              className="hover:text-spotify transition"
+              className="hover:text-green-500 transition"
             >
               <FaEnvelope />
             </Link>
             <Link
               to={socialLinks.whatsapp}
               aria-label="WhatsApp"
-              className="hover:text-spotify transition"
+              className="hover:text-green-500 transition"
             >
               <FaWhatsapp />
             </Link>
           </div>
 
-          <ul className="space-y-3 text-gray-400 mb-6">
+          <ul className="space-y-3 mb-6">
             <li className="flex items-center space-x-3">
-              <FaPhone className="text-spotify" />
+              <FaLocationArrow className="text-spotify" />
               <span>{location}</span>
             </li>
             <li className="flex items-center space-x-3">
@@ -149,34 +171,27 @@ const AboutPage = () => {
             </li>
           </ul>
 
-          <div className="flex space-x-4 w-full">
+          {/* <div className="flex space-x-4 w-full">
             <Link to={socialLinks.resume}>
               <Button>
-                <span className=" flex items-center gap-2">Resume</span>
+                <span className="flex items-center gap-2">Resume</span>
               </Button>
             </Link>
-            <Link to="/contact">
-              <Button>
-                <span className=" flex items-center gap-2">Contact </span>
-              </Button>
-            </Link>
-          </div>
+          </div> */}
         </div>
 
         {/* Right Content - Professional Journey */}
         <div className="md:col-span-2">
-          <section className="bg-base-300 rounded-xl p-8  h-full">
-            <h2 className="text-xl sm:text-3xl md:text-3xl text-center lg:text-start border-b-1   border-b-green-500 font-extrabold mb-4">
+          <section className="bg-base-300 rounded-xl p-8 h-full">
+            <h2 className="text-xl sm:text-3xl md:text-3xl pb-4 text-start  border-b-1 border-b-green-500 font-extrabold mb-4">
               <span className="text-spotify">About</span> Me
             </h2>
-
             {professionalJourney.map(({ heading, content }) => (
               <div key={heading} className="mb-6 last:mb-0">
                 <h4 className="text-spotify font-semibold mb-1">{heading}</h4>
-                <p className=" leading-relaxed">{content}</p>
+                <p className="leading-relaxed">{content}</p>
               </div>
             ))}
-
             <p className="mt-6">
               <a
                 href="#projects"
@@ -189,11 +204,31 @@ const AboutPage = () => {
         </div>
       </div>
 
-      {/* Full-width Journey Timeline Section */}
-      <section className="bg-base-300 rounded-xl p-8  mb-16">
-        <h3 className="text-xl text-purple-400 font-semibold mb-6 border-b border-purple-400 pb-2">
-          My Journey
-        </h3>
+      {/* Education Section */}
+      <section className="bg-base-300 rounded-xl p-8 mb-16">
+        <h2 className="text-xl sm:text-3xl md:text-3xl text-start border-b-1 pb-4 border-b-green-500 font-extrabold mb-8">
+          <span className="text-spotify ">My </span>Education
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {educationData.map((edu, index) => (
+            <div
+              key={index}
+              className="p-6 bg-base-100 rounded-xl space-y-3 transition"
+            >
+              <h3 className="font-bold text-xl ">{edu.level}</h3>
+              <p className="text-md text-gray-400 ">{edu.institution}</p>
+              <span className="text-sm text-spotify block">{edu.year}</span>
+              <p className="text-sm font-semibold">{edu.result}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Full-width Journey Timeline */}
+      <section className="bg-base-300 rounded-xl p-8 mb-16">
+        <h2 className="text-xl sm:text-3xl md:text-3xl text-start border-b-1 pb-4 border-b-green-500 font-extrabold mb-4">
+          <span className="text-spotify">My</span> Journey
+        </h2>
         <ul className="space-y-8">
           {journey.map(({ year, title, description, iconColor }) => (
             <li key={year} className="flex items-start space-x-6">
@@ -204,42 +239,13 @@ const AboutPage = () => {
                 ●
               </div>
               <div>
-                <p className="font-semibold text-lg ">{title}</p>
+                <p className="font-semibold text-lg">{title}</p>
                 <span className="text-xs text-spotify block mb-1">{year}</span>
-                <p className=" leading-relaxed">{description}</p>
+                <p className="leading-relaxed">{description}</p>
               </div>
             </li>
           ))}
         </ul>
-      </section>
-
-      {/* Full-width CTA Section */}
-      <section className="bg-base-300 rounded-xl py-16   text-center">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl text-center t font-extrabold mb-4">
-          <span className="text-spotify">Let's</span> Collaborate
-        </h2>
-        <p className="mb-6 max-w-4xl mx-auto">
-          I’m actively seeking new challenges, collaborations, and opportunities
-          to grow as a developer. Whether you have a project idea, a technical
-          question, or just want to connect over shared interests—I’d love to
-          hear from you! When I’m not immersed in code, I recharge by exploring
-          nature (camera in hand) or experimenting with photography. Capturing
-          moments through a lens helps me approach problem-solving with
-          creativity and patience—skills I bring to every project. Let’s build
-          something meaningful together!
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-          <Link to={socialLinks.resume}>
-            <Button>
-              <span className=" flex items-center gap-2">View My Projects</span>
-            </Button>
-          </Link>
-          <Link to="#contact">
-            <Button>
-              <span className=" flex items-center gap-2">Contact Me</span>
-            </Button>
-          </Link>
-        </div>
       </section>
     </section>
   );

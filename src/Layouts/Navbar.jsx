@@ -48,6 +48,11 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 max-w-[80vw] "
           >
+            <li>
+              <NavLink to="/" className="capitalize cursor-pointer">
+                Home
+              </NavLink>
+            </li>
             {navItems.map((item) => (
               <li key={item}>
                 <NavLink to={item} className="capitalize cursor-pointer">
@@ -59,16 +64,10 @@ const Navbar = () => {
         </div>
 
         {/* Logo */}
-        <Link
-          className="ml-2 cursor-pointer"
-          to="/"
-          smooth={true}
-          duration={500}
-          offset={-70}
-        >
+        <Link className="ml-2 cursor-pointer" to="/">
           <img
             src={theme === "light" ? blackLogo : whiteLogo}
-            alt="Logo"
+            alt="home logo"
             className="h-8"
           />
         </Link>
@@ -77,6 +76,11 @@ const Navbar = () => {
       {/* Desktop nav */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
+          <li>
+            <NavLink to="/" className="capitalize cursor-pointer">
+              Home
+            </NavLink>
+          </li>
           {navItems.map((item) => (
             <li key={item}>
               <NavLink to={item} className="capitalize cursor-pointer">

@@ -39,14 +39,7 @@ const ProjectDetails = () => {
   } = project;
 
   return (
-    <div className="relative max-w-6xl mx-auto my-20 p-6 bg-base-300 rounded-xl ">
-      {/* Featured badge top-right */}
-      {featured && (
-        <span className="absolute top-2 right-4 px-4 py-2 bg-green-500/20 text-spotify rounded-full  text-sm z-20">
-          🌟 Featured
-        </span>
-      )}
-
+    <div className="relative max-w-6xl mx-auto my-20 p-6 bg-base-300 rounded-xl">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left Section */}
         <div>
@@ -55,23 +48,31 @@ const ProjectDetails = () => {
             <img
               src={image}
               alt={title}
-              className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
+              className="w-full h-60 sm:h-72 object-cover hover:scale-105 transition-transform duration-300"
             />
           </div>
 
           {/* Project Name */}
           <h1 className="text-3xl font-bold mb-3">{title}</h1>
 
-          {/* Status */}
-          <span
-            className={`px-3 py-1 text-sm rounded-full ${
-              status === "completed"
-                ? "bg-spotify text-white"
-                : "bg-yellow-500 text-black"
-            }`}
-          >
-            {status}
-          </span>
+          {/* Status & Featured inline */}
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            <span
+              className={`px-3 py-1 text-sm rounded-full ${
+                status === "completed"
+                  ? "bg-spotify text-white"
+                  : "bg-yellow-500 text-black"
+              }`}
+            >
+              {status}
+            </span>
+
+            {featured && (
+              <span className="px-4 py-1 bg-green-500/20 text-spotify rounded-full text-sm">
+                🌟 Featured
+              </span>
+            )}
+          </div>
 
           {/* Tech Stack Grouped */}
           <div className="mt-4 space-y-4">
@@ -131,7 +132,7 @@ const ProjectDetails = () => {
             {links?.liveDemo && (
               <Link to={links.liveDemo} target="_blank">
                 <Button>
-                  <span className=" flex items-center gap-2">
+                  <span className="flex items-center gap-2">
                     Live Demo <FaExternalLinkAlt size={14} />
                   </span>
                 </Button>
@@ -140,7 +141,7 @@ const ProjectDetails = () => {
             {links?.clientSide && (
               <Link to={links.clientSide} target="_blank">
                 <Button>
-                  <span className=" flex items-center gap-2">
+                  <span className="flex items-center gap-2">
                     Client Repo <FaGithub size={14} />
                   </span>
                 </Button>
@@ -149,7 +150,7 @@ const ProjectDetails = () => {
             {links?.serverSide && (
               <Link to={links.serverSide} target="_blank">
                 <Button>
-                  <span className=" flex items-center gap-2">
+                  <span className="flex items-center gap-2">
                     Server Repo <FaGithub size={14} />
                   </span>
                 </Button>
@@ -160,15 +161,13 @@ const ProjectDetails = () => {
 
         {/* Right Section */}
         <div className="space-y-8">
-          {/* Description */}
           <h2 className="text-xl font-semibold mb-2">Brief Description:</h2>
-          <p className=" ">{description}</p>
+          <p>{description}</p>
 
-          {/* Key Features */}
           {keyFeature?.length > 0 && (
             <>
               <h2 className="text-xl font-semibold mb-2">Key Features:</h2>
-              <ul className="list-disc list-inside space-y-1  ">
+              <ul className="list-disc list-inside space-y-1">
                 {keyFeature.map((feature, idx) => (
                   <li key={idx}>{feature}</li>
                 ))}
@@ -176,21 +175,19 @@ const ProjectDetails = () => {
             </>
           )}
 
-          {/* Challenges */}
           {challenges && (
             <>
               <h2 className="text-xl font-semibold mb-2">Challenges Faced:</h2>
-              <p className="">{challenges}</p>
+              <p>{challenges}</p>
             </>
           )}
 
-          {/* Improvements */}
           {improvements && (
             <>
               <h2 className="text-xl font-semibold mb-2">
                 Potential Improvements & Future Plans:
               </h2>
-              <p className="">{improvements}</p>
+              <p>{improvements}</p>
             </>
           )}
         </div>

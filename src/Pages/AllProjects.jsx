@@ -94,7 +94,7 @@ const AllProjects = () => {
             </label>
             <input
               type="text"
-              placeholder="Search by title or description..."
+              placeholder="Search Projects..."
               className="input input-bordered w-full"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
