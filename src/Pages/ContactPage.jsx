@@ -17,23 +17,23 @@ import { motion } from "framer-motion"; // <-- Import motion
 const contactInfo = [
   {
     icon: <FaEnvelope />,
-    value: "ranokraihan@gmail.com",
-    link: "mailto:ranokraihan@gmail.com",
+    value: "mdmunatsir.dev@gmail.com",
+    link: "mailto:mdmunatsir.dev@gmail.com",
   },
   {
     icon: <FaPhone />,
-    value: "+880 178 342 4220",
+    value: "+8801783-424220",
     link: "tel:+8801783424220",
   },
   {
     icon: <FaGithub />,
-    value: "github.com/ranokraihan",
-    link: "https://github.com/ranokraihan",
+    value: "Munatsir",
+    link: "https://github.com/mdmunatsirtonoy",
   },
   {
     icon: <FaLinkedin />,
-    value: "linkedin.com/in/ranokraihan",
-    link: "https://linkedin.com/in/ranokraihan",
+    value: "Munatsir MMahmud",
+    link: "https://linkedin.com/in/mdmunatsirtonoy",
   },
   {
     icon: <FaMapMarkerAlt />,

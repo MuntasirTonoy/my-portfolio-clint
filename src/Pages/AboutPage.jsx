@@ -85,9 +85,9 @@ const aboutData = {
     ],
 
     socialLinks: {
-      github: "https://github.com/ranokraihan",
-      linkedin: "https://linkedin.com/in/ranokraihan",
-      email: "mailto:ranok@example.com",
+      github: "https://github.com/muntasirtonoy",
+      linkedin: "https://linkedin.com/in/mdmunatsirtonoy",
+      email: "mailto:mdmunatsir.dev@gmail.com",
       resume:
         "https://drive.google.com/uc?export=download&id=13zl3BQsdlwAsrhjQT8Yv8oC2KIZTDCnN",
       whatsapp: "https://wa.me/+8801783424220",
