@@ -11,7 +11,7 @@ import image3 from "../assets/images/img3.jpg";
 import image4 from "../assets/images/img4.jpg";
 import { Link } from "react-router";
 
-const About = () => {
+const Introduction = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isChanging, setIsChanging] = useState(false);
 
@@ -137,4 +137,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default Introduction;

@@ -7,7 +7,7 @@ const SkillCard = ({ category, items, delay }) => {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay }}
-      viewport={{ once: true }}
+      viewport={{ once: false }}
       className="bg-base-200 rounded-2xl p-6 shadow-xs border-1 border-base-300  transition-all duration-300"
     >
       <h3 className="text-xl font-bold text-spotify mb-6 border-b border-gray-300 pb-2">
@@ -31,7 +31,7 @@ const SkillCard = ({ category, items, delay }) => {
                 initial={{ width: 0 }}
                 whileInView={{ width: `${skill.proficiency}%` }}
                 transition={{ duration: 1, ease: "easeOut" }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
               />
             </div>
           </div>

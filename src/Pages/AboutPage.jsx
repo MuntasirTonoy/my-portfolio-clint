@@ -1,16 +1,15 @@
 import React from "react";
+import { motion } from "framer-motion";
 import {
   FaGithub,
   FaLinkedin,
   FaEnvelope,
-  FaPhone,
   FaWhatsapp,
   FaClock,
   FaLocationArrow,
 } from "react-icons/fa";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { Link } from "react-router";
-import Button from "../Components/Button";
 
 const educationData = [
   {
@@ -97,6 +96,7 @@ const aboutData = {
 };
 
 const AboutPage = () => {
+  // destructure from aboutData
   const {
     name,
     designation,
@@ -108,12 +108,29 @@ const AboutPage = () => {
     socialLinks,
   } = aboutData.aboutMe;
 
+  // common animation settings
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (customDelay) => ({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, delay: customDelay },
+    }),
+  };
+
   return (
     <section className="min-h-screen font-sans p-6 md:p-12 max-w-7xl mx-auto mt-20">
       {/* Two-column grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 mb-16">
         {/* Left Card */}
-        <div className="bg-base-300 rounded-xl p-8 flex flex-col justify-center items-center md:items-start text-center md:text-left">
+        <motion.div
+          className="bg-base-300 rounded-xl p-8 flex flex-col justify-center items-center md:items-start text-center md:text-left"
+          variants={cardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false }}
+          custom={0} // delay 0s
+        >
           <img
             src="https://i.ibb.co.com/rR6w9b10/image.jpg"
             alt={name}
@@ -171,7 +188,7 @@ const AboutPage = () => {
               <span>{availability}</span>
             </li>
           </ul>
-        </div>
+        </motion.div>
 
         {/* Right Content - Professional Journey */}
         <div className="lg:col-span-2">
@@ -179,19 +196,27 @@ const AboutPage = () => {
             <h2 className="text-xl sm:text-3xl md:text-3xl pb-4 text-start border-b-1 border-b-green-500 font-extrabold mb-4">
               <span className="text-spotify">About</span> Me
             </h2>
-            {professionalJourney.map(({ heading, content }) => (
-              <div key={heading} className="mb-6 last:mb-0">
+            {professionalJourney.map(({ heading, content }, i) => (
+              <motion.div
+                key={heading}
+                className="mb-6 last:mb-0"
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false }}
+                custom={i * 0.2 + 0.3} // stagger with delay
+              >
                 <h4 className="text-spotify font-semibold mb-1">{heading}</h4>
                 <p className="leading-relaxed">{content}</p>
-              </div>
+              </motion.div>
             ))}
             <p className="mt-6">
-              <a
-                href="#projects"
+              <Link
+                to="#projects"
                 className="text-spotify hover:underline font-semibold"
               >
                 Explore my projects →
-              </a>
+              </Link>
             </p>
           </section>
         </div>
@@ -204,15 +229,20 @@ const AboutPage = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {educationData.map((edu, index) => (
-            <div
+            <motion.div
               key={index}
               className="p-6 bg-base-100 rounded-xl space-y-3 transition"
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              custom={index * 0.2 + 0.2}
             >
               <h3 className="font-bold text-xl">{edu.level}</h3>
               <p className="text-md text-gray-400">{edu.institution}</p>
               <span className="text-sm text-spotify block">{edu.year}</span>
               <p className="text-sm font-semibold">{edu.result}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
@@ -223,8 +253,16 @@ const AboutPage = () => {
           <span className="text-spotify">My</span> Journey
         </h2>
         <ul className="space-y-8">
-          {journey.map(({ year, title, description, iconColor }) => (
-            <li key={year} className="flex items-start space-x-6">
+          {journey.map(({ year, title, description, iconColor }, idx) => (
+            <motion.li
+              key={year}
+              className="flex items-start space-x-6"
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              custom={idx * 0.2 + 0.1}
+            >
               <div
                 className={`${iconColor} flex-shrink-0 mt-1 text-2xl`}
                 aria-hidden="true"
@@ -236,7 +274,7 @@ const AboutPage = () => {
                 <span className="text-xs text-spotify block mb-1">{year}</span>
                 <p className="leading-relaxed">{description}</p>
               </div>
-            </li>
+            </motion.li>
           ))}
         </ul>
       </section>

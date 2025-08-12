@@ -1,16 +1,22 @@
 import React from "react";
 import Button from "../Components/Button";
-import { FiArrowUpRight, FiDownload } from "react-icons/fi";
+import { FiDownload } from "react-icons/fi";
 import WordFlip from "../Components/WordFlip";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import HeroPhoto from "../Components/HeroPhoto";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
     <div className="hero bg-base-200 min-h-screen px-4 lg:px-20">
       <div className="hero-content flex flex-col lg:flex-row items-center gap-8">
-        {/* Text content stays second */}
-        <div className="text-center order-2 lg:order-1 lg:text-left">
+        {/* Text content with animation */}
+        <motion.div
+          className="text-center order-2 lg:order-1 lg:text-left"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <h1 className="text-3xl md:text-4xl font-bold ">
             HELLO! I'm
             <br /> <span className="text-6xl text-spotify">Muntasir</span>
@@ -39,14 +45,13 @@ const Hero = () => {
               rel="noopener noreferrer"
             >
               <Button>
-                <span className="flex items-center   gap-2">
+                <span className="flex items-center gap-2">
                   Discussion <IoChatbubblesOutline />
                 </span>
               </Button>
             </a>
           </div>
-        </div>
-        {/* Image stays first */}
+        </motion.div>
         <HeroPhoto />
       </div>
     </div>

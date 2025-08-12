@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Button from "../Components/Button";
 import { useForm } from "react-hook-form";
-import emailjs from "emailjs-com"; // ✅ Import EmailJS
-import Swal from "sweetalert2"; // ✅ For nice success/error popups
+import emailjs from "emailjs-com";
+import Swal from "sweetalert2";
 import {
   FaEnvelope,
   FaPhone,
@@ -12,36 +12,32 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import { Link } from "react-router";
+import { motion } from "framer-motion"; // <-- Import motion
 
 const contactInfo = [
   {
-    icon: <FaEnvelope className="text-xl text-spotify" />,
-    value: "mdmuntasir.dev@gmail.com",
-    link: "https://mail.google.com/mail/?view=cm&fs=1&to=mdmuntasir.dev@gmail.com",
+    icon: <FaEnvelope />,
+    value: "ranokraihan@gmail.com",
+    link: "mailto:ranokraihan@gmail.com",
   },
   {
-    icon: <FaPhone className="text-xl text-spotify" />,
-    value: "+8801783424220",
+    icon: <FaPhone />,
+    value: "+880 178 342 4220",
     link: "tel:+8801783424220",
   },
   {
-    icon: <FaMapMarkerAlt className="text-xl text-spotify" />,
-    value: "Dhaka, Bangladesh",
+    icon: <FaGithub />,
+    value: "github.com/ranokraihan",
+    link: "https://github.com/ranokraihan",
   },
   {
-    icon: <FaGithub className="text-xl text-spotify" />,
-    link: "https://github.com/muntasirtonoy",
-    value: "github.com/muntasirtonoy",
+    icon: <FaLinkedin />,
+    value: "linkedin.com/in/ranokraihan",
+    link: "https://linkedin.com/in/ranokraihan",
   },
   {
-    icon: <FaLinkedin className="text-xl text-spotify" />,
-    link: "https://www.linkedin.com/in/muntasirtonoy/",
-    value: "linkedin.com/in/muntasirtonoy",
-  },
-  {
-    icon: <FaFacebook className="text-xl text-spotify" />,
-    link: "https://facebook.com/nameistonoy",
-    value: "facebook.com/nameistonoy",
+    icon: <FaMapMarkerAlt />,
+    value: "Kushtia, Bangladesh",
   },
 ];
 
@@ -55,38 +51,54 @@ const ContactPage = () => {
     formState: { errors },
   } = useForm();
 
-  // ✅ EmailJS send function
   const onSubmit = (data) => {
     setLoading(true);
     emailjs
       .send(
-        "service_b24hywd", // EmailJS Service ID
-        "template_nrnbgbp", // EmailJS Template ID
+        "service_b24hywd",
+        "template_nrnbgbp",
         {
           name: data.name,
           email: data.email,
           message: data.message,
         },
-        "w3L0GmacoYEpdGzIV" // EmailJS Public Key
+        "w3L0GmacoYEpdGzIV"
       )
       .then(
-        (result) => {
+        () => {
           setLoading(false);
           Swal.fire("Success!", "Your message has been sent!", "success");
           reset();
         },
-        (error) => {
+        () => {
           setLoading(false);
-          Swal.fire(" Oops!", "Failed to send message. Try again.", "error");
+          Swal.fire("Oops!", "Failed to send message. Try again.", "error");
         }
       );
+  };
+
+  // animation variants for reveal
+  const revealVariant = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (delay = 0) => ({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, delay },
+    }),
   };
 
   return (
     <div className="min-h-screen my-20 bg-base-100 px-5">
       <section className="py-16 md:px-5 lg:px-24 flex flex-col md:flex-row justify-center items-start gap-12 md:gap-16">
         {/* Left: Contact Info */}
-        <div className="w-full md:w-5/12 lg:w-4/12">
+        <motion.div
+          className="w-full md:w-5/12 lg:w-4/12"
+          variants={revealVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false }}
+          custom={0} // delay 0s
+        >
           <h2 className="text-4xl md:text-5xl font-extrabold text-spotify mb-8">
             Get In <span className="text-base-content">Touch</span>
           </h2>
@@ -117,13 +129,18 @@ const ContactPage = () => {
               </li>
             ))}
           </ul>
-        </div>
+        </motion.div>
 
         {/* Right: Contact Form */}
-        <form
+        <motion.form
           onSubmit={handleSubmit(onSubmit)}
           className="w-full md:w-7/12 lg:w-6/12 space-y-6 bg-base-300 p-5 md:p-8 rounded-lg border border-base-300"
           noValidate
+          variants={revealVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false }}
+          custom={0.3} // delay 0.3s
         >
           <h3 className="text-2xl font-semibold text-spotify mb-6">
             Send Me a Message
@@ -196,11 +213,18 @@ const ContactPage = () => {
           <Button type="submit" className="w-full mt-4" disabled={loading}>
             {loading ? "Sending..." : "Send Message"}
           </Button>
-        </form>
+        </motion.form>
       </section>
 
       {/* Bottom Section */}
-      <section className="bg-base-300 rounded-xl py-16 container mx-auto text-center">
+      <motion.section
+        className="bg-base-300 rounded-xl py-16 container mx-auto text-center"
+        variants={revealVariant}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false }}
+        custom={0.3} // delay 0.3s
+      >
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
           <span className="text-spotify">Let's</span> Collaborate
         </h2>
@@ -216,7 +240,7 @@ const ContactPage = () => {
             </Button>
           </Link>
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 };

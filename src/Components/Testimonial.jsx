@@ -1,6 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
+import { motion } from "framer-motion";
 import "swiper/css";
 import "swiper/css/pagination";
 import ReviewCard from "./ReviewCard";
@@ -58,7 +59,13 @@ const reviews = [
 
 const Testimonials = () => {
   return (
-    <section className="bg-base-100 overflow-hidden">
+    <motion.section
+      className="bg-base-100 overflow-hidden"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false, amount: 0.3 }}
+      transition={{ duration: 0.8 }}
+    >
       <div className="max-w-6xl mx-auto px-4  lg:px-8">
         <div className="text-center mb-8 sm:mb-12">
           <h4 className="text-spotify font-bold text-sm sm:text-lg mb-2">
@@ -73,7 +80,7 @@ const Testimonials = () => {
           modules={[Pagination, Autoplay]}
           pagination={{ clickable: true }}
           autoplay={{
-            delay: 2000, // 2 seconds
+            delay: 2000,
             disableOnInteraction: false,
           }}
           spaceBetween={20}
@@ -92,7 +99,7 @@ const Testimonials = () => {
           ))}
         </Swiper>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

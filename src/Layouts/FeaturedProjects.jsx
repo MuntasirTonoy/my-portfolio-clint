@@ -39,8 +39,8 @@ const FeaturedProjects = () => {
       </h2>
 
       <div className="max-w-7xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {featuredProjects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+        {featuredProjects.map((project, i) => (
+          <ProjectCard key={project.id} project={project} delay={i * 0.15} />
         ))}
       </div>
 

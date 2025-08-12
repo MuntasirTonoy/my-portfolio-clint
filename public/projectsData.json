@@ -38,7 +38,7 @@
     "tech": {
       "frontend": ["React", "Tailwind CSS"],
       "backend": ["Node.js", "Express", "MongoDB"],
-      "other": ["Firebase", "Stripe"]
+      "other": ["Firebase"]
     },
     "tags": ["events", "community", "social"],
     "status": "completed",
@@ -68,7 +68,7 @@
     "tech": {
       "frontend": ["React", "Tailwind CSS"],
       "backend": ["Node.js", "Express", "MongoDB"],
-      "other": ["Firebase", "Stripe"]
+      "other": ["Firebase"]
     },
     "tags": ["recipes", "food", "cooking"],
     "status": "working",

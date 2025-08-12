@@ -8,7 +8,7 @@ const statusColors = {
   working: "bg-yellow-100 text-yellow-700",
 };
 
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({ project, delay = 0 }) => {
   const { id, image, title, description, status } = project;
   const [isHovered, setIsHovered] = useState(false);
 
@@ -16,6 +16,10 @@ const ProjectCard = ({ project }) => {
     <motion.div
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false }}
+      transition={{ duration: 0.6, delay }}
       className="relative group w-full max-w-md mx-auto bg-base-300 rounded-lg border border-base-300 overflow-hidden z-10 flex flex-col"
       style={{ minHeight: "420px" }} // enforce min height for uniformity
     >

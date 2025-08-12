@@ -20,7 +20,13 @@ const HeroPhoto = () => {
   };
 
   return (
-    <div className="relative w-full max-w-[280px] xs:max-w-xs sm:max-w-sm md:max-w-md lg:max-w-sm mx-auto rounded-lg overflow-visible order-1 lg:order-2">
+    <motion.div
+      className="relative w-full max-w-[280px] xs:max-w-xs sm:max-w-sm md:max-w-md lg:max-w-sm mx-auto rounded-lg overflow-visible order-1 lg:order-2"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      viewport={{ once: false }}
+    >
       {/* Animated Blurred Blob */}
       <motion.div
         variants={blobVariants}
@@ -45,7 +51,7 @@ const HeroPhoto = () => {
           className="w-full h-auto object-cover"
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

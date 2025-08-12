@@ -164,7 +164,7 @@ const AllProjects = () => {
         {filteredProjects.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
             <AnimatePresence>
-              {filteredProjects.map((project) => (
+              {filteredProjects.map((project, index) => (
                 <motion.div
                   key={project.id}
                   layout
@@ -173,7 +173,7 @@ const AllProjects = () => {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <ProjectCard project={project} />
+                  <ProjectCard project={project} delay={index * 0.1} />
                 </motion.div>
               ))}
             </AnimatePresence>
