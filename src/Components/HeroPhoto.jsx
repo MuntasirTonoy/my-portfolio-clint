@@ -42,13 +42,34 @@ const HeroPhoto = () => {
         style={{ backgroundColor: "#02b677", zIndex: 0 }}
       />
 
-      {/* Main Photo */}
-      <div className="relative rounded-xl overflow-hidden shadow-2xl z-10 w-full">
+      {/* Main Photo with Segmented Neon Border */}
+      <div className="relative z-10 w-full aspect-square rounded-full overflow-hidden flex items-center justify-center bg-black">
+        {/* Segmented Border */}
+        <motion.svg
+          className="absolute inset-0 w-full h-full"
+          viewBox="0 0 200 200"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+        >
+          <circle
+            cx="100"
+            cy="100"
+            r="100"
+            stroke="#00ff99"
+            strokeWidth="4"
+            strokeDasharray="40 20"
+            strokeLinecap="round"
+          />
+        </motion.svg>
+
+        {/* Actual Photo */}
         <img
           src={photo}
           alt="hero"
           loading="lazy"
-          className="w-full h-auto object-cover"
+          className="w-full h-full object-cover rounded-full "
         />
       </div>
     </motion.div>
