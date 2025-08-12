@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../Components/Button";
 import { useForm } from "react-hook-form";
+import emailjs from "emailjs-com"; // ✅ Import EmailJS
+import Swal from "sweetalert2"; // ✅ For nice success/error popups
 import {
   FaEnvelope,
   FaPhone,
@@ -15,7 +17,7 @@ const contactInfo = [
   {
     icon: <FaEnvelope className="text-xl text-spotify" />,
     value: "mdmuntasir.dev@gmail.com",
-    link: "mailto:mdmuntasir.dev@gmail.com",
+    link: "https://mail.google.com/mail/?view=cm&fs=1&to=mdmuntasir.dev@gmail.com",
   },
   {
     icon: <FaPhone className="text-xl text-spotify" />,
@@ -44,6 +46,8 @@ const contactInfo = [
 ];
 
 const ContactPage = () => {
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -51,17 +55,36 @@ const ContactPage = () => {
     formState: { errors },
   } = useForm();
 
+  // ✅ EmailJS send function
   const onSubmit = (data) => {
-    console.log("Form data:", data);
-    reset();
+    setLoading(true);
+    emailjs
+      .send(
+        "service_b24hywd", // EmailJS Service ID
+        "template_nrnbgbp", // EmailJS Template ID
+        {
+          name: data.name,
+          email: data.email,
+          message: data.message,
+        },
+        "w3L0GmacoYEpdGzIV" // EmailJS Public Key
+      )
+      .then(
+        (result) => {
+          setLoading(false);
+          Swal.fire("Success!", "Your message has been sent!", "success");
+          reset();
+        },
+        (error) => {
+          setLoading(false);
+          Swal.fire(" Oops!", "Failed to send message. Try again.", "error");
+        }
+      );
   };
 
   return (
-    <div className="min-h-screen my-20 bg-base-100 px-5 ">
-      <section
-        className=" py-16  md:px-12 lg:px-24  flex flex-col md:flex-row justify-center items-start gap-12 md:gap-16"
-        aria-label="Contact section"
-      >
+    <div className="min-h-screen my-20 bg-base-100 px-5">
+      <section className="py-16 md:px-5 lg:px-24 flex flex-col md:flex-row justify-center items-start gap-12 md:gap-16">
         {/* Left: Contact Info */}
         <div className="w-full md:w-5/12 lg:w-4/12">
           <h2 className="text-4xl md:text-5xl font-extrabold text-spotify mb-8">
@@ -99,13 +122,14 @@ const ContactPage = () => {
         {/* Right: Contact Form */}
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full md:w-7/12 lg:w-6/12 space-y-6 bg-base-300 p-5 md:p-8 rounded-lg  border border-base-300"
+          className="w-full md:w-7/12 lg:w-6/12 space-y-6 bg-base-300 p-5 md:p-8 rounded-lg border border-base-300"
           noValidate
         >
           <h3 className="text-2xl font-semibold text-spotify mb-6">
             Send Me a Message
           </h3>
 
+          {/* Name */}
           <div className="form-control">
             <label htmlFor="name" className="label">
               <span className="label-text font-medium">Your Name</span>
@@ -118,16 +142,13 @@ const ContactPage = () => {
                 errors.name ? "input-error" : ""
               }`}
               placeholder="Enter your name"
-              aria-invalid={errors.name ? "true" : "false"}
-              aria-describedby="name-error"
             />
             {errors.name && (
-              <p id="name-error" className="text-error mt-2 text-sm">
-                {errors.name.message}
-              </p>
+              <p className="text-error mt-2 text-sm">{errors.name.message}</p>
             )}
           </div>
 
+          {/* Email */}
           <div className="form-control">
             <label htmlFor="email" className="label">
               <span className="label-text font-medium">Your Email</span>
@@ -146,16 +167,13 @@ const ContactPage = () => {
                 errors.email ? "input-error" : ""
               }`}
               placeholder="Enter your email"
-              aria-invalid={errors.email ? "true" : "false"}
-              aria-describedby="email-error"
             />
             {errors.email && (
-              <p id="email-error" className="text-error mt-2 text-sm">
-                {errors.email.message}
-              </p>
+              <p className="text-error mt-2 text-sm">{errors.email.message}</p>
             )}
           </div>
 
+          {/* Message */}
           <div className="form-control">
             <label htmlFor="message" className="label">
               <span className="label-text font-medium">Your Message</span>
@@ -167,69 +185,36 @@ const ContactPage = () => {
                 errors.message ? "textarea-error" : ""
               }`}
               placeholder="How can I help you?"
-              aria-invalid={errors.message ? "true" : "false"}
-              aria-describedby="message-error"
             ></textarea>
             {errors.message && (
-              <p id="message-error" className="text-error mt-2 text-sm">
+              <p className="text-error mt-2 text-sm">
                 {errors.message.message}
               </p>
             )}
           </div>
 
-          <Button type="submit" className="w-full mt-4">
-            Send Message
+          <Button type="submit" className="w-full mt-4" disabled={loading}>
+            {loading ? "Sending..." : "Send Message"}
           </Button>
         </form>
       </section>
 
-      {/* <div className="grid md:grid-cols-2 container mx-auto mb-10 gap-8 mt-16">
-        <div className="bg-green-400/10 p-8 rounded-lg border border-primary/20">
-          <h3 className="text-xl font-semibold mb-3 text-spotify">
-            Work Inquiry
-          </h3>
-          <p className="mb-6 text-base-content/80">
-            Interested in collaborating on a project? Let's discuss how we can
-            work together.
-          </p>
-          <Button type="submit">Submit</Button>
-        </div>
-        <div className="bg-green-400/10 p-8 rounded-lg border border-secondary/20">
-          <h3 className="text-xl font-semibold mb-3 text-spotify">
-            Quick Question
-          </h3>
-          <p className="mb-6 text-base-content/80">
-            Have a brief question? Send me a quick email and I'll get back to
-            you as soon as possible.
-          </p>
-          <Button type="submit">email me</Button>
-        </div>
-      </div> */}
-      <section className="bg-base-300 rounded-xl py-16 container mx-auto   text-center">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl text-center t font-extrabold mb-4">
+      {/* Bottom Section */}
+      <section className="bg-base-300 rounded-xl py-16 container mx-auto text-center">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
           <span className="text-spotify">Let's</span> Collaborate
         </h2>
         <p className="mb-6 max-w-4xl mx-auto p-5">
           I’m actively seeking new challenges, collaborations, and opportunities
           to grow as a developer. Whether you have a project idea, a technical
-          question, or just want to connect over shared interests—I’d love to
-          hear from you! When I’m not immersed in code, I recharge by exploring
-          nature (camera in hand) or experimenting with photography. Capturing
-          moments through a lens helps me approach problem-solving with
-          creativity and patience—skills I bring to every project. Let’s build
-          something meaningful together!
+          question, or just want to connect—I’d love to hear from you!
         </p>
         <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
           <Link to="/projects">
             <Button>
-              <span className=" flex items-center gap-2">View My Projects</span>
+              <span className="flex items-center gap-2">View My Projects</span>
             </Button>
           </Link>
-          {/* <Link to="/contact">
-            <Button>
-              <span className=" flex items-center gap-2">Contact Me</span>
-            </Button>
-          </Link> */}
         </div>
       </section>
     </div>
