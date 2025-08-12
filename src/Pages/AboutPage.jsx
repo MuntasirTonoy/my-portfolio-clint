@@ -11,6 +11,7 @@ import {
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { Link } from "react-router";
 import Button from "../Components/Button";
+
 const educationData = [
   {
     level: "HSC (Science)",
@@ -108,9 +109,9 @@ const AboutPage = () => {
   } = aboutData.aboutMe;
 
   return (
-    <section className="min-h-screen font-sans p-8 md:p-16 max-w-7xl mx-auto mt-20">
+    <section className="min-h-screen font-sans p-6 md:p-12 max-w-7xl mx-auto mt-20">
       {/* Two-column grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 mb-16">
         {/* Left Card */}
         <div className="bg-base-300 rounded-xl p-8 flex flex-col justify-center items-center md:items-start text-center md:text-left">
           <img
@@ -122,38 +123,38 @@ const AboutPage = () => {
           <p className="text-spotify mb-4">{designation}</p>
 
           <div className="flex space-x-6 text-gray-400 mb-6 text-lg">
-            <Link
-              to={socialLinks.github}
+            <a
+              href={socialLinks.github}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
               className="hover:text-green-500 transition"
             >
               <FaGithub />
-            </Link>
-            <Link
-              to={socialLinks.linkedin}
+            </a>
+            <a
+              href={socialLinks.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
               className="hover:text-green-500 transition"
             >
               <FaLinkedin />
-            </Link>
-            <Link
-              to={socialLinks.email}
+            </a>
+            <a
+              href={socialLinks.email}
               aria-label="Email"
               className="hover:text-green-500 transition"
             >
               <FaEnvelope />
-            </Link>
-            <Link
-              to={socialLinks.whatsapp}
+            </a>
+            <a
+              href={socialLinks.whatsapp}
               aria-label="WhatsApp"
               className="hover:text-green-500 transition"
             >
               <FaWhatsapp />
-            </Link>
+            </a>
           </div>
 
           <ul className="space-y-3 mb-6">
@@ -170,20 +171,12 @@ const AboutPage = () => {
               <span>{availability}</span>
             </li>
           </ul>
-
-          {/* <div className="flex space-x-4 w-full">
-            <Link to={socialLinks.resume}>
-              <Button>
-                <span className="flex items-center gap-2">Resume</span>
-              </Button>
-            </Link>
-          </div> */}
         </div>
 
         {/* Right Content - Professional Journey */}
-        <div className="md:col-span-2">
+        <div className="lg:col-span-2">
           <section className="bg-base-300 rounded-xl p-8 h-full">
-            <h2 className="text-xl sm:text-3xl md:text-3xl pb-4 text-start  border-b-1 border-b-green-500 font-extrabold mb-4">
+            <h2 className="text-xl sm:text-3xl md:text-3xl pb-4 text-start border-b-1 border-b-green-500 font-extrabold mb-4">
               <span className="text-spotify">About</span> Me
             </h2>
             {professionalJourney.map(({ heading, content }) => (
@@ -209,14 +202,14 @@ const AboutPage = () => {
         <h2 className="text-xl sm:text-3xl md:text-3xl text-start border-b-1 pb-4 border-b-green-500 font-extrabold mb-8">
           <span className="text-spotify ">My </span>Education
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {educationData.map((edu, index) => (
             <div
               key={index}
               className="p-6 bg-base-100 rounded-xl space-y-3 transition"
             >
-              <h3 className="font-bold text-xl ">{edu.level}</h3>
-              <p className="text-md text-gray-400 ">{edu.institution}</p>
+              <h3 className="font-bold text-xl">{edu.level}</h3>
+              <p className="text-md text-gray-400">{edu.institution}</p>
               <span className="text-sm text-spotify block">{edu.year}</span>
               <p className="text-sm font-semibold">{edu.result}</p>
             </div>
@@ -225,7 +218,7 @@ const AboutPage = () => {
       </section>
 
       {/* Full-width Journey Timeline */}
-      <section className="bg-base-300 rounded-xl p-8 mb-16">
+      <section className="bg-base-300 rounded-xl md:p-8 p-6 mb-16">
         <h2 className="text-xl sm:text-3xl md:text-3xl text-start border-b-1 pb-4 border-b-green-500 font-extrabold mb-4">
           <span className="text-spotify">My</span> Journey
         </h2>
