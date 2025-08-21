@@ -25,14 +25,14 @@ const Hero = () => {
             A Full Stack Developer
           </h1>
           <WordFlip />
-          <p className="py-2  text-base md:text-lg ">
+          <p className="py-2  text-base md:text-lg mx-w-2 ">
             Passionate Full Stack Developer skilled in building robust,
             scalable, and user-friendly web applications. Proficient in both
             frontend and backend technologies, I turn creative ideas into
             complete digital solutions. Let’s build your next project together.
           </p>
           <div className="flex gap-3 justify-center lg:justify-start">
-            <a href="https://drive.google.com/uc?export=download&id=13zl3BQsdlwAsrhjQT8Yv8oC2KIZTDCnN">
+            <a href="https://drive.google.com/uc?export=download&id=1S7hX9xfMWYdf6S6A-IeB4MwEugaRTraG">
               <Button>
                 <span className="flex items-center gap-2 ">
                   Download CV <FiDownload />

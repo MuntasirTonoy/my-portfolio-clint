@@ -17,8 +17,8 @@ import { motion } from "framer-motion"; // <-- Import motion
 const contactInfo = [
   {
     icon: <FaEnvelope />,
-    value: "mdmunatsir.dev@gmail.com",
-    link: "mailto:mdmunatsir.dev@gmail.com",
+    value: "mdmuntasir.dev@gmail.com",
+    link: "mailto:mdmuntasir.dev@gmail.com",
   },
   {
     icon: <FaPhone />,
@@ -27,13 +27,13 @@ const contactInfo = [
   },
   {
     icon: <FaGithub />,
-    value: "Munatsir",
-    link: "https://github.com/mdmunatsirtonoy",
+    value: "Muntasir",
+    link: "https://github.com/muntasirtonoy",
   },
   {
     icon: <FaLinkedin />,
-    value: "Munatsir MMahmud",
-    link: "https://linkedin.com/in/mdmunatsirtonoy",
+    value: "Muntasir Mahmud",
+    link: "https://linkedin.com/in/muntasirtonoy",
   },
   {
     icon: <FaMapMarkerAlt />,

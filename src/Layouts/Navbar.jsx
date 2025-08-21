@@ -94,7 +94,7 @@ const Navbar = () => {
       {/* Theme Toggle */}
       <div className="navbar-end gap-2 ">
         <div className="hidden md:block">
-          <a href="https://drive.google.com/uc?export=download&id=13zl3BQsdlwAsrhjQT8Yv8oC2KIZTDCnN">
+          <a href="https://drive.google.com/uc?export=download&id=1S7hX9xfMWYdf6S6A-IeB4MwEugaRTraG">
             <Button>
               <span className="flex items-center gap-2">
                 Resume <FiDownload />

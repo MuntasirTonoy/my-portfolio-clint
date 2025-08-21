@@ -62,6 +62,16 @@ const ProjectCard = ({ project, delay = 0 }) => {
         <p className="text-sm text-base-content line-clamp-2 flex-grow">
           {description}
         </p>
+        <div className="flex gap-2">
+          {project.tags.map((tag) => (
+            <span
+              className="px-3 py-1 bg-accent text-black rounded-full text-xs"
+              key={tag}
+            >
+              #{tag}
+            </span>
+          ))}
+        </div>
 
         {/* Mobile View Button inside padding with margin-top auto to push it down */}
         <div className="lg:hidden mt-auto pt-4">

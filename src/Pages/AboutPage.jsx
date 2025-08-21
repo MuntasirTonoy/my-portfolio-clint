@@ -86,10 +86,10 @@ const aboutData = {
 
     socialLinks: {
       github: "https://github.com/muntasirtonoy",
-      linkedin: "https://linkedin.com/in/mdmunatsirtonoy",
-      email: "mailto:mdmunatsir.dev@gmail.com",
+      linkedin: "https://linkedin.com/in/muntasirtonoy",
+      email: "mailto:mdmuntasir.dev@gmail.com",
       resume:
-        "https://drive.google.com/uc?export=download&id=13zl3BQsdlwAsrhjQT8Yv8oC2KIZTDCnN",
+        "https://drive.google.com/uc?export=download&id=1S7hX9xfMWYdf6S6A-IeB4MwEugaRTraG",
       whatsapp: "https://wa.me/+8801783424220",
     },
   },
