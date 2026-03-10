@@ -35,7 +35,7 @@ const reviews = [
     name: "Michael Carter",
     role: "CEO",
     avatar:
-      "hhttps://images.unsplash.com/photo-1639149888905-fb39731f2e6c?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     review:
       "Professional, efficient, and very creative. The project exceeded expectations in every way.",
   },
@@ -51,7 +51,7 @@ const reviews = [
     name: "David Kim",
     role: "Software Engineer",
     avatar:
-      "https://images.unsplash.com/photo-1603415526960-f7e0328e29df?w=200&auto=format&fit=crop&q=60",
+      "https://images.unsplash.com/photo-1480455624313-e29b44bbfde1?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     review:
       "Code quality was excellent. The documentation was clear and the app ran flawlessly.",
   },

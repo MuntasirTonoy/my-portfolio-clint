@@ -8,27 +8,26 @@ const skills = [
       {
         name: "React.js",
         icon: "https://cdn.simpleicons.org/react/61DAFB",
-        proficiency: 90,
       },
       {
         name: "JavaScript",
         icon: "https://cdn.simpleicons.org/javascript/F7DF1E",
-        proficiency: 85,
       },
       {
         name: "HTML5",
         icon: "https://cdn.simpleicons.org/html5/E34F26",
-        proficiency: 95,
       },
       {
         name: "CSS3",
         icon: "https://raw.githubusercontent.com/CSS-Next/logo.css/main/css.svg",
-        proficiency: 90,
       },
       {
-        name: "Tailwind CSS",
+        name: "Tailwind",
         icon: "https://cdn.simpleicons.org/tailwindcss/06B6D4",
-        proficiency: 80,
+      },
+      {
+        name: "Nextjs",
+        icon: "https://cdn.simpleicons.org/nextdotjs/000000",
       },
     ],
   },
@@ -38,22 +37,22 @@ const skills = [
       {
         name: "Node.js",
         icon: "https://cdn.simpleicons.org/node.js/339933",
-        proficiency: 85,
       },
       {
         name: "Express.js",
         icon: "https://cdn.simpleicons.org/express/000000",
-        proficiency: 80,
       },
       {
         name: "MongoDB",
         icon: "https://cdn.simpleicons.org/mongodb/47A248",
-        proficiency: 75,
       },
       {
         name: "Firebase",
         icon: "https://cdn.simpleicons.org/firebase/FFCA28",
-        proficiency: 70,
+      },
+      {
+        name: "Mongoose",
+        icon: "https://cdn.simpleicons.org/mongoose/86BC25",
       },
     ],
   },
@@ -63,17 +62,22 @@ const skills = [
       {
         name: "Git",
         icon: "https://cdn.simpleicons.org/git/F05032",
-        proficiency: 90,
       },
       {
         name: "GitHub",
         icon: "https://cdn.simpleicons.org/github/181717",
-        proficiency: 90,
       },
       {
         name: "VS Code",
         icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/2048px-Visual_Studio_Code_1.35_icon.svg.png",
-        proficiency: 95,
+      },
+      {
+        name: "Postman",
+        icon: "https://simpleicons.org/icons/postman.svg",
+      },
+      {
+        name: "Figma",
+        icon: "https://cdn.simpleicons.org/figma/F24E1E",
       },
     ],
   },
@@ -92,7 +96,7 @@ const Skills = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {skills.map((group, index) => (
             <SkillCard
               key={index}
