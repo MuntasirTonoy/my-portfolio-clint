@@ -10,103 +10,26 @@ import {
 } from "react-icons/fa";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { Link } from "react-router";
-
-const educationData = [
-  {
-    level: "HSC (Science)",
-    institution: "Khulna Public College",
-    year: "2020",
-    result: "GPA 5.00",
-  },
-  {
-    level: "B.Sc in Mathematics",
-    institution: "Government College, Kushtia",
-    year: "2021 - Present",
-    result: "Current CGPA: 3.85",
-  },
-  {
-    level: "M.Sc in Mathematics",
-    institution: "Planned for Future",
-    year: "Upcoming",
-    result: "N/A",
-  },
-];
-
-const aboutData = {
-  aboutMe: {
-    name: "Md Munatsir Mahmud (Tonoy) ",
-    designation: "Full Stack Developer",
-    location: "Kushtia, Bangladesh",
-    experience: "2+ Years of Experience",
-    availability: "Available",
-    professionalJourney: [
-      {
-        heading: "Who I Am",
-        content: `I'm a dedicated Full Stack Developer with 2+ years of experience in building modern web applications. I focus on creating accessible and robust digital experiences that truly impact users.`,
-      },
-      {
-        heading: "My Approach",
-        content: `Writing clean, maintainable code is my mantra. My background in Physics has honed my analytical and problem-solving skills, which I apply daily to solve complex development challenges.`,
-      },
-      {
-        heading: "Academic Background",
-        content: `While currently completing my Bachelor's degree in Mathematics, I find the structured, analytical approach of mathematical thinking perfectly complements my programming work.`,
-      },
-    ],
-    journey: [
-      {
-        year: 2021,
-        title: "Academic Beginning & Discovery",
-        description:
-          "Embarked on my Bachelor's degree in Mathematics, which honed my problem-solving and analytical thinking skills. During this time, I was introduced to the world of programming, sparking a deep curiosity for technology and its potential to solve real-world problems.",
-        iconColor: "text-green-400",
-      },
-      {
-        year: "2022-2023",
-        title: "Web Development Foundations",
-        description:
-          "Focused on mastering the core building blocks of the web—HTML, CSS, and JavaScript. Developed an understanding of responsive design, semantic markup, and interactive UI behaviors, laying a strong foundation for future full-stack development.",
-        iconColor: "text-blue-400",
-      },
-      {
-        year: "2024-2025",
-        title: "Structured Learning & Growth",
-        description:
-          "Completed the Level 1 course from Programming Hero, which provided a structured approach to modern web development. Learned to work with frameworks, apply best coding practices, and collaborate on small-scale projects that simulated real-world workflows.",
-        iconColor: "text-purple-400",
-      },
-      {
-        year: "Present",
-        title: "Continuous Improvement",
-        description:
-          "Actively balancing my Mathematics degree with ongoing programming projects and advanced learning. Exploring backend technologies, refining frontend skills, and contributing to personal and collaborative projects to expand both technical depth and creative problem-solving abilities.",
-        iconColor: "text-yellow-400",
-      },
-    ],
-
-    socialLinks: {
-      github: "https://github.com/muntasirtonoy",
-      linkedin: "https://linkedin.com/in/muntasirtonoy",
-      email: "mailto:mdmuntasir.dev@gmail.com",
-      resume:
-        "https://drive.google.com/uc?export=download&id=1S7hX9xfMWYdf6S6A-IeB4MwEugaRTraG",
-      whatsapp: "https://wa.me/+8801783424220",
-    },
-  },
-};
+import { usePortfolio } from "../Pages/Admin/AdminContext";
+import Loading from "../Components/Loading";
 
 const AboutPage = () => {
-  // destructure from aboutData
+  const { portfolioData, loading } = usePortfolio();
+
+  if (loading || !portfolioData?.about) return <Loading fullScreen />;
+
   const {
     name,
     designation,
     location,
     experience,
     availability,
+    profileImage,
+    socialLinks,
     professionalJourney,
     journey,
-    socialLinks,
-  } = aboutData.aboutMe;
+    education
+  } = portfolioData.about;
 
   // common animation settings
   const cardVariants = {
@@ -132,7 +55,7 @@ const AboutPage = () => {
           custom={0} // delay 0s
         >
           <img
-            src="https://i.ibb.co.com/rR6w9b10/image.jpg"
+            src={profileImage || "https://i.ibb.co.com/rR6w9b10/image.jpg"}
             alt={name}
             className="w-40 h-40 rounded-full ring-4 ring-green-500 shadow-lg mb-6 object-cover"
           />
@@ -141,33 +64,29 @@ const AboutPage = () => {
 
           <div className="flex space-x-6 text-gray-400 mb-6 text-lg">
             <a
-              href={socialLinks.github}
+              href={socialLinks?.github}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="GitHub"
               className="hover:text-green-500 transition"
             >
               <FaGithub />
             </a>
             <a
-              href={socialLinks.linkedin}
+              href={socialLinks?.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="LinkedIn"
               className="hover:text-green-500 transition"
             >
               <FaLinkedin />
             </a>
             <a
-              href={socialLinks.email}
-              aria-label="Email"
+              href={socialLinks?.email}
               className="hover:text-green-500 transition"
             >
               <FaEnvelope />
             </a>
             <a
-              href={socialLinks.whatsapp}
-              aria-label="WhatsApp"
+              href={socialLinks?.whatsapp}
               className="hover:text-green-500 transition"
             >
               <FaWhatsapp />
@@ -196,9 +115,9 @@ const AboutPage = () => {
             <h2 className="text-xl sm:text-3xl md:text-3xl pb-4 text-start border-b-1 border-b-green-500 font-extrabold mb-4">
               <span className="text-spotify">About</span> Me
             </h2>
-            {professionalJourney.map(({ heading, content }, i) => (
+            {(professionalJourney || []).map(({ heading, content }, i) => (
               <motion.div
-                key={heading}
+                key={i}
                 className="mb-6 last:mb-0"
                 variants={cardVariants}
                 initial="hidden"
@@ -212,7 +131,7 @@ const AboutPage = () => {
             ))}
             <p className="mt-6">
               <Link
-                to="#projects"
+                to="/projects"
                 className="text-spotify hover:underline font-semibold"
               >
                 Explore my projects →
@@ -228,7 +147,7 @@ const AboutPage = () => {
           <span className="text-spotify ">My </span>Education
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {educationData.map((edu, index) => (
+          {(education || []).map((edu, index) => (
             <motion.div
               key={index}
               className="p-6 bg-base-100 rounded-xl space-y-3 transition"
@@ -253,9 +172,9 @@ const AboutPage = () => {
           <span className="text-spotify">My</span> Journey
         </h2>
         <ul className="space-y-8">
-          {journey.map(({ year, title, description, iconColor }, idx) => (
+          {(journey || []).map(({ year, title, description, iconColor }, idx) => (
             <motion.li
-              key={year}
+              key={idx}
               className="flex items-start space-x-6"
               variants={cardVariants}
               initial="hidden"

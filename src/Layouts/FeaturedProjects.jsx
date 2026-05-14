@@ -1,56 +1,46 @@
-// src/pages/MyProjects.jsx
 import React from "react";
 import ProjectCard from "../Components/ProjectCard";
 import Button from "../Components/Button";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { Link } from "react-router";
-import { useQuery } from "@tanstack/react-query";
-import { fetchProjects } from "../Api/Api";
-import Loading from "../Components/Loading";
-import ErrorPage from "../Pages/ErrorPage";
+import { usePortfolio } from "../Pages/Admin/AdminContext";
+import { ProjectSkeleton } from "../Components/Skeleton";
 
 const FeaturedProjects = () => {
-  // Use TanStack Query to fetch projects
-  const {
-    data: projects,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["projects"],
-    queryFn: fetchProjects,
-  });
+  const { portfolioData, loading } = usePortfolio();
 
-  // Filter featured projects
-  const featuredProjects = projects?.filter((p) => p.featured) || [];
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <ErrorPage />;
-  }
+  // Filter featured projects from the backend data
+  const featuredProjects = (portfolioData?.projects || []).filter((p) => p.featured);
 
   return (
-    <section className="px-4 md:px-6 lg:px-8">
+    <section className="px-4 md:px-6 lg:px-8 py-20">
       <h2 className="text-5xl text-center font-extrabold mb-10">
         <span className="text-spotify">Featured</span> Projects
       </h2>
 
       <div className="max-w-7xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {featuredProjects.map((project, i) => (
-          <ProjectCard key={project.id} project={project} delay={i * 0.15} />
-        ))}
+        {loading ? (
+          <>
+            <ProjectSkeleton />
+            <ProjectSkeleton />
+            <ProjectSkeleton />
+          </>
+        ) : (
+          featuredProjects.map((project, i) => (
+            <ProjectCard key={project._id || i} project={project} delay={i * 0.15} />
+          ))
+        )}
       </div>
 
-      <div className="text-center mt-12">
-        <Link to="/projects">
-          <Button>
-            All Projects <HiOutlineArrowNarrowRight />
-          </Button>
-        </Link>
-      </div>
+      {!loading && (
+        <div className="text-center mt-12">
+          <Link to="/projects">
+            <Button>
+              All Projects <HiOutlineArrowNarrowRight />
+            </Button>
+          </Link>
+        </div>
+      )}
     </section>
   );
 };

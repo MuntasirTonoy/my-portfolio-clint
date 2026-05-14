@@ -1,29 +1,20 @@
 import React, { useState, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import ProjectCard from "../Components/ProjectCard";
-import { fetchProjects } from "../Api/Api";
-import Loading from "../Components/Loading";
-import ErrorPage from "./ErrorPage";
+import { ProjectSkeleton } from "../Components/Skeleton";
 import { BiSearch } from "react-icons/bi";
+import { usePortfolio } from "../Pages/Admin/AdminContext";
 
 const AllProjects = () => {
-  const {
-    data: projects = [],
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["projects"],
-    queryFn: fetchProjects,
-  });
+  const { portfolioData, loading } = usePortfolio();
+  
+  const projects = portfolioData?.projects || [];
 
   const [searchQuery, setSearchQuery] = useState("");
   const [techFilter, setTechFilter] = useState("");
   const [tagFilter, setTagFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
 
-  // Gather unique techs, tags, and statuses for filters
   const filterOptions = useMemo(() => {
     const techSet = new Set();
     const tagSet = new Set();
@@ -44,7 +35,6 @@ const AllProjects = () => {
     };
   }, [projects]);
 
-  // Filter projects based on all inputs
   const filteredProjects = useMemo(() => {
     return projects.filter((p) => {
       const matchesSearch =
@@ -65,9 +55,6 @@ const AllProjects = () => {
     });
   }, [projects, searchQuery, techFilter, tagFilter, statusFilter]);
 
-  if (isLoading) return <Loading fullScreen />;
-  if (isError) return <ErrorPage />;
-
   return (
     <div className="min-h-screen mt-20 bg-base-100">
       {/* Hero Section */}
@@ -83,9 +70,8 @@ const AllProjects = () => {
       </section>
 
       <section className="container mx-auto px-4  ">
-        {/* Filters: search, Tech, Tag, Status */}
+        {/* Filters */}
         <div className="flex flex-wrap gap-4 mb-5">
-          {/* Search Box */}
           <div className="mb-6 flex">
             <label className="label">
               <span className="label-text mr-1">
@@ -107,9 +93,7 @@ const AllProjects = () => {
           >
             <option value="">All Technologies</option>
             {filterOptions.techs.map((tech) => (
-              <option key={tech} value={tech}>
-                {tech}
-              </option>
+              <option key={tech} value={tech}>{tech}</option>
             ))}
           </select>
 
@@ -120,9 +104,7 @@ const AllProjects = () => {
           >
             <option value="">All Tags</option>
             {filterOptions.tags.map((tag) => (
-              <option key={tag} value={tag}>
-                {tag}
-              </option>
+              <option key={tag} value={tag}>{tag}</option>
             ))}
           </select>
 
@@ -143,9 +125,9 @@ const AllProjects = () => {
         {/* Results Info */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl  font-semibold">
-            {filteredProjects.length} Projects Found
+            {loading ? "Loading Projects..." : `${filteredProjects.length} Projects Found`}
           </h2>
-          {(searchQuery || techFilter || tagFilter || statusFilter) && (
+          {(searchQuery || techFilter || tagFilter || statusFilter) && !loading && (
             <button
               onClick={() => {
                 setSearchQuery("");
@@ -161,12 +143,14 @@ const AllProjects = () => {
         </div>
 
         {/* Projects Grid */}
-        {filteredProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
+          {loading ? (
+            [1, 2, 3, 4, 5, 6].map(i => <ProjectSkeleton key={i} />)
+          ) : filteredProjects.length > 0 ? (
             <AnimatePresence>
               {filteredProjects.map((project, index) => (
                 <motion.div
-                  key={project.id}
+                  key={project._id || index}
                   layout
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -177,26 +161,24 @@ const AllProjects = () => {
                 </motion.div>
               ))}
             </AnimatePresence>
-          </div>
-        ) : (
-          <div className="text-center py-16 bg-base-200 rounded-xl">
-            <div className="text-5xl mb-4">🧐</div>
-            <h3 className="text-xl font-medium mb-2">
-              No projects match your filters
-            </h3>
-            <button
-              onClick={() => {
-                setSearchQuery("");
-                setTechFilter("");
-                setTagFilter("");
-                setStatusFilter("");
-              }}
-              className="btn btn-primary mt-4"
-            >
-              Reset All Filters
-            </button>
-          </div>
-        )}
+          ) : (
+            <div className="col-span-full text-center py-16 bg-base-200 rounded-xl">
+              <div className="text-5xl mb-4">🧐</div>
+              <h3 className="text-xl font-medium mb-2">No projects match your filters</h3>
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setTechFilter("");
+                  setTagFilter("");
+                  setStatusFilter("");
+                }}
+                className="btn btn-primary mt-4"
+              >
+                Reset All Filters
+              </button>
+            </div>
+          )}
+        </div>
       </section>
     </div>
   );

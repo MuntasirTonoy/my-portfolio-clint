@@ -1,29 +1,27 @@
 import React from "react";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 import { Link, useParams } from "react-router";
-import { useQuery } from "@tanstack/react-query";
-import { fetchProjects } from "../Api/Api";
 import Loading from "../Components/Loading";
-import ErrorPage from "./ErrorPage";
 import Button from "../Components/Button";
+import { usePortfolio } from "../Pages/Admin/AdminContext";
 
 const ProjectDetails = () => {
   const { id } = useParams();
+  const { portfolioData, loading } = usePortfolio();
 
-  const {
-    data: projects,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["projects"],
-    queryFn: fetchProjects,
-  });
+  // Find project in the global projects array
+  const projects = portfolioData?.projects || [];
+  const project = projects.find((p) => p._id === id || p.id?.toString() === id);
 
-  const project = projects?.find((p) => p.id === parseInt(id));
-
-  if (isLoading) return <Loading />;
-  if (isError) return <ErrorPage />;
-  if (!project) return <p className="text-center">Project not found</p>;
+  if (loading) return <Loading fullScreen />;
+  if (!project) return (
+    <div className="min-h-screen flex flex-col items-center justify-center space-y-4">
+      <p className="text-2xl font-bold">Project not found</p>
+      <Link to="/projects">
+        <Button>Back to Projects</Button>
+      </Link>
+    </div>
+  );
 
   const {
     image,
@@ -39,26 +37,26 @@ const ProjectDetails = () => {
   } = project;
 
   return (
-    <div className="relative max-w-6xl mx-auto my-20 p-6 bg-base-300 rounded-xl">
+    <div className="relative max-w-6xl mx-auto my-20 p-6 bg-base-300 rounded-xl min-h-[70vh]">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left Section */}
         <div>
           {/* Project Image */}
-          <div className="overflow-hidden rounded-xl border border-gray-300 mb-6">
+          <div className="overflow-hidden rounded-xl border border-base-100 mb-6 shadow-xl">
             <img
               src={image}
               alt={title}
-              className="w-full h-60 sm:h-72 object-cover hover:scale-105 transition-transform duration-300"
+              className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
             />
           </div>
 
           {/* Project Name */}
-          <h1 className="text-3xl font-bold mb-3">{title}</h1>
+          <h1 className="text-3xl font-extrabold mb-3">{title}</h1>
 
           {/* Status & Featured inline */}
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <span
-              className={`px-3 py-1 text-sm rounded-full ${
+              className={`px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full ${
                 status === "completed"
                   ? "bg-spotify text-white"
                   : "bg-yellow-500 text-black"
@@ -68,24 +66,24 @@ const ProjectDetails = () => {
             </span>
 
             {featured && (
-              <span className="px-4 py-1 bg-green-500/20 text-spotify rounded-full text-sm">
-                🌟 Featured
+              <span className="px-4 py-1 bg-green-500/20 text-spotify border border-spotify/20 rounded-full text-xs font-bold uppercase tracking-wider">
+                🌟 Featured Project
               </span>
             )}
           </div>
 
           {/* Tech Stack Grouped */}
-          <div className="mt-4 space-y-4">
-            <h2 className="text-lg font-semibold">Main Tech Stack:</h2>
+          <div className="mt-6 space-y-6">
+            <h2 className="text-lg font-bold border-b border-base-100 pb-2">Technical Details</h2>
 
             {tech?.frontend?.length > 0 && (
               <div>
-                <h3 className="font-medium text-sm mb-1">Frontend:</h3>
+                <h3 className="font-semibold text-sm mb-2 text-base-content/60">Frontend:</h3>
                 <div className="flex flex-wrap gap-2">
                   {tech.frontend.map((t, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm"
+                      className="px-3 py-1 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-lg text-sm"
                     >
                       {t}
                     </span>
@@ -96,12 +94,12 @@ const ProjectDetails = () => {
 
             {tech?.backend?.length > 0 && (
               <div>
-                <h3 className="font-medium text-sm mb-1">Backend:</h3>
+                <h3 className="font-semibold text-sm mb-2 text-base-content/60">Backend:</h3>
                 <div className="flex flex-wrap gap-2">
                   {tech.backend.map((t, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm"
+                      className="px-3 py-1 bg-green-500/10 text-green-400 border border-green-500/20 rounded-lg text-sm"
                     >
                       {t}
                     </span>
@@ -112,12 +110,12 @@ const ProjectDetails = () => {
 
             {tech?.other?.length > 0 && (
               <div>
-                <h3 className="font-medium text-sm mb-1">Other Tools:</h3>
+                <h3 className="font-semibold text-sm mb-2 text-base-content/60">Tools & Infrastructure:</h3>
                 <div className="flex flex-wrap gap-2">
                   {tech.other.map((t, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm"
+                      className="px-3 py-1 bg-purple-500/10 text-purple-400 border border-purple-500/20 rounded-lg text-sm"
                     >
                       {t}
                     </span>
@@ -128,7 +126,7 @@ const ProjectDetails = () => {
           </div>
 
           {/* Links */}
-          <div className="flex flex-wrap gap-4 mt-6">
+          <div className="flex flex-wrap gap-4 mt-8">
             {links?.liveDemo && (
               <Link to={links.liveDemo} target="_blank">
                 <Button>
@@ -160,35 +158,38 @@ const ProjectDetails = () => {
         </div>
 
         {/* Right Section */}
-        <div className="space-y-8">
-          <h2 className="text-xl font-semibold mb-2">Brief Description:</h2>
-          <p>{description}</p>
+        <div className="space-y-8 lg:border-l lg:border-base-100 lg:pl-8">
+          <div>
+            <h2 className="text-xl font-bold mb-4 text-spotify">About this project</h2>
+            <p className="text-base-content/80 leading-relaxed text-justify">{description}</p>
+          </div>
 
           {keyFeature?.length > 0 && (
-            <>
-              <h2 className="text-xl font-semibold mb-2">Key Features:</h2>
-              <ul className="list-disc list-inside space-y-1">
+            <div>
+              <h2 className="text-xl font-bold mb-4 text-spotify">Key Features</h2>
+              <ul className="grid grid-cols-1 gap-3">
                 {keyFeature.map((feature, idx) => (
-                  <li key={idx}>{feature}</li>
+                  <li key={idx} className="flex items-start gap-3 bg-base-100/50 p-3 rounded-lg border border-base-100">
+                    <span className="text-spotify mt-1">▹</span>
+                    <span className="text-sm">{feature}</span>
+                  </li>
                 ))}
               </ul>
-            </>
+            </div>
           )}
 
           {challenges && (
-            <>
-              <h2 className="text-xl font-semibold mb-2">Challenges Faced:</h2>
-              <p>{challenges}</p>
-            </>
+            <div>
+              <h2 className="text-xl font-bold mb-4 text-spotify">Challenges Faced</h2>
+              <p className="text-base-content/80 leading-relaxed italic border-l-4 border-spotify pl-4">{challenges}</p>
+            </div>
           )}
 
           {improvements && (
-            <>
-              <h2 className="text-xl font-semibold mb-2">
-                Potential Improvements & Future Plans:
-              </h2>
-              <p>{improvements}</p>
-            </>
+            <div>
+              <h2 className="text-xl font-bold mb-4 text-spotify">Future Roadmap</h2>
+              <p className="text-base-content/80 leading-relaxed">{improvements}</p>
+            </div>
           )}
         </div>
       </div>

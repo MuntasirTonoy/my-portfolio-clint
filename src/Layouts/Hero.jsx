@@ -5,6 +5,7 @@ import WordFlip from "../Components/WordFlip";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import HeroPhoto from "../Components/HeroPhoto";
 import { motion } from "framer-motion";
+import { usePortfolio } from "../Pages/Admin/AdminContext";
 
 /* Stagger container – children animate in sequence */
 const containerVariants = {
@@ -51,6 +52,16 @@ const particles = [
 ];
 
 const Hero = () => {
+  const { portfolioData, loading } = usePortfolio();
+  
+  if (loading || !portfolioData?.hero) return (
+    <div className="min-h-screen bg-base-200 flex items-center justify-center">
+      <span className="loading loading-spinner loading-lg text-spotify"></span>
+    </div>
+  );
+
+  const { hero } = portfolioData;
+
   return (
     <section
       id="hero"
@@ -102,7 +113,7 @@ const Hero = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#02b677] opacity-75" />
             </span>
             <span className="text-xs font-semibold tracking-widest uppercase text-[#02b677] opacity-80">
-              Available for work
+              {hero.badge || "Available for work"}
             </span>
           </motion.div>
 
@@ -111,7 +122,7 @@ const Hero = () => {
             variants={itemVariants}
             className="text-base md:text-lg font-medium text-base-content/60 tracking-widest uppercase mb-1"
           >
-            Hello, I'm
+            {hero.greeting || "Hello, I'm"}
           </motion.p>
 
           {/* Name */}
@@ -120,14 +131,7 @@ const Hero = () => {
             className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight"
           >
             <span className="relative inline-block">
-              <span className="text-spotify">Muntasir</span>
-              {/* Underline accent */}
-              {/* <motion.span
-                className="absolute -bottom-1 left-0 h-[3px] rounded-full bg-[#02b677]"
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 0.8, delay: 0.9, ease: "easeOut" }}
-              /> */}
+              <span className="text-spotify">{hero.name || "Muntasir"}</span>
             </span>
           </motion.h1>
 
@@ -141,7 +145,7 @@ const Hero = () => {
             variants={itemVariants}
             className="lg:hidden text-lg font-semibold text-spotify mt-1 mb-2"
           >
-            Full-Stack Developer
+            {hero.roleTags?.[0] || "Full-Stack Developer"}
           </motion.p>
 
           {/* Description */}
@@ -149,54 +153,29 @@ const Hero = () => {
             variants={itemVariants}
             className="mt-4 text-base md:text-lg leading-relaxed text-base-content/70 max-w-lg mx-auto lg:mx-0"
           >
-            Passionate Full-Stack Developer crafting{" "}
-            <span className="text-spotify font-semibold">robust</span>,{" "}
-            <span className="text-spotify font-semibold">scalable</span> &amp;{" "}
-            <span className="text-spotify font-semibold">beautiful</span> web
-            experiences. Let's build something amazing together.
+            {hero.description}
           </motion.p>
-
-          {/* Stat row */}
-          {/* <motion.div
-            variants={itemVariants}
-            className="flex gap-8 justify-center lg:justify-start mt-6 mb-8"
-          >
-            {[
-              { value: "1+", label: "Years Exp." },
-              { value: "20+", label: "Projects" },
-              { value: "10+", label: "Clients" },
-            ].map((s) => (
-              <div key={s.label} className="text-center lg:text-left">
-                <p className="text-2xl font-extrabold text-spotify">
-                  {s.value}
-                </p>
-                <p className="text-xs text-base-content/50 uppercase tracking-wider">
-                  {s.label}
-                </p>
-              </div>
-            ))}
-          </motion.div> */}
 
           {/* CTA buttons */}
           <motion.div
             variants={itemVariants}
             className="flex gap-3 flex-wrap justify-center lg:justify-start mt-6"
           >
-            <a href="https://drive.google.com/uc?export=download&id=1S7hX9xfMWYdf6S6A-IeB4MwEugaRTraG">
+            <a href={hero.cvLink} target="_blank" rel="noopener noreferrer">
               <Button>
                 <span className="flex items-center gap-2">
-                  Download CV <FiDownload />
+                  {hero.ctaBtn1Text || "Download CV"} <FiDownload />
                 </span>
               </Button>
             </a>
             <a
-              href="https://wa.me/8801783424220?text=Hello%20there!%20I%20saw%20your%20portfolio."
+              href={hero.whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
             >
               <Button>
                 <span className="flex items-center gap-2">
-                  Let's Talk <IoChatbubblesOutline />
+                  {hero.ctaBtn2Text || "Let's Talk"} <IoChatbubblesOutline />
                 </span>
               </Button>
             </a>

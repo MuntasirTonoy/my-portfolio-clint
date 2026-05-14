@@ -1,21 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Tabs from "../Components/Tabs";
 import Button from "../Components/Button";
 import { BsArrowRight } from "react-icons/bs";
+import { Link } from "react-router";
+import { usePortfolio } from "../Pages/Admin/AdminContext";
 
-// Import local images
+// Import local images as fallbacks
 import image1 from "../assets/images/img1.jpg";
 import image2 from "../assets/images/img2.jpg";
 import image3 from "../assets/images/img3.jpg";
 import image4 from "../assets/images/img4.jpg";
-import { Link } from "react-router";
 
 const Introduction = () => {
+  const { portfolioData, loading } = usePortfolio();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isChanging, setIsChanging] = useState(false);
 
   const imageArray = [image1, image2, image3, image4];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsChanging(true);
+      setTimeout(() => {
+        setCurrentImageIndex(
+          (prevIndex) => (prevIndex + 1) % imageArray.length
+        );
+        setIsChanging(false);
+      }, 500);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [imageArray.length]);
+
+  if (loading || !portfolioData?.introduction) return null;
+
+  const { introduction } = portfolioData;
 
   const blobVariants = {
     animate: {
@@ -31,24 +50,10 @@ const Introduction = () => {
     },
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsChanging(true);
-      setTimeout(() => {
-        setCurrentImageIndex(
-          (prevIndex) => (prevIndex + 1) % imageArray.length
-        );
-        setIsChanging(false);
-      }, 500);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [imageArray.length]);
-
   return (
-    <div className="">
+    <div className="py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row justify-center items-center lg:items-start gap-8 sm:gap-12">
-        {/* Image Section with better sizing */}
+        {/* Image Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -56,7 +61,6 @@ const Introduction = () => {
           className="relative w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto lg:mx-0 flex-shrink-0 
              h-[300px] sm:h-[400px] lg:h-[450px]"
         >
-          {/* Animated Blob */}
           <motion.div
             variants={blobVariants}
             animate="animate"
@@ -68,7 +72,6 @@ const Introduction = () => {
             }}
           />
 
-          {/* Static Glow */}
           <div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
                w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[450px] lg:h-[450px] 
@@ -76,7 +79,6 @@ const Introduction = () => {
             style={{ backgroundColor: "#02b677", zIndex: 0 }}
           />
 
-          {/* Profile Image Container */}
           <div className="relative w-full h-full rounded-xl z-10 overflow-hidden">
             <motion.img
               key={currentImageIndex}
@@ -85,11 +87,7 @@ const Introduction = () => {
               initial={{ opacity: 0, scale: 1.1 }}
               animate={{ opacity: isChanging ? 0 : 1, scale: 1 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="w-full h-full object-cover rounded-lg"
-              style={{
-                objectFit: "cover",
-                objectPosition: "center",
-              }}
+              className="w-full h-full object-cover rounded-lg shadow-2xl"
             />
           </div>
         </motion.div>
@@ -102,23 +100,10 @@ const Introduction = () => {
           className="flex-1 space-y-4 sm:space-y-6 flex flex-col justify-start"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl text-center lg:text-start font-extrabold mb-4">
-            <span className="text-spotify">My</span> Introduction
+            <span className="text-spotify">My</span> {introduction.heading || "Introduction"}
           </h2>
-          <p className="text-base-content text-justify text-sm sm:text-base">
-            I'm a passionate front-end developer with a solid foundation in
-            HTML, CSS, and JavaScript, dedicated to crafting clean, responsive,
-            and accessible websites. My work is driven by a commitment to
-            delivering seamless user experiences that balance aesthetics with
-            functionality. I have a keen eye for detail, ensuring every design
-            element aligns with modern web standards. Beyond coding, I'm deeply
-            interested in UI/UX principles, and I continuously explore new
-            tools, frameworks, and techniques to stay ahead in the ever-evolving
-            world of web development. My goal is to transform creative concepts
-            into engaging, user-friendly digital solutions that leave a lasting
-            impact. My true passion lies in solving real user problems through
-            elegant technical solutions. I'm currently looking for opportunities
-            to work on ambitious projects that push the boundaries of what's
-            possible on the web while making a positive impact on users' lives.
+          <p className="text-base-content text-justify text-sm sm:text-base leading-relaxed opacity-80">
+            {introduction.description}
           </p>
           <div className="text-center lg:text-start">
             <Link to="/about">
@@ -129,8 +114,6 @@ const Introduction = () => {
               </Button>
             </Link>
           </div>
-
-          {/* Tabs rendered here */}
         </motion.div>
       </div>
     </div>

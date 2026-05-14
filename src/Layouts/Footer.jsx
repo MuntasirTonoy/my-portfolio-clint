@@ -7,7 +7,11 @@ const Footer = () => {
         <aside>
           <p>
             Copyright © {new Date().getFullYear()} - All right reserved by{" "}
-            <span className="font-semibold">Md Muntasir Mashmud (Tonoy)</span>
+            <span className="font-semibold">
+              <a href="https://muntasir-mahmud.web.app/admin">
+                Md Muntasir Mashmud (Tonoy){" "}
+              </a>
+            </span>
           </p>
         </aside>
       </footer>
