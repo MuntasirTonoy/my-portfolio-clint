@@ -2,6 +2,7 @@ import React from "react";
 import { FiSave, FiRefreshCw, FiEye, FiEyeOff } from "react-icons/fi";
 import Button from "../../Components/Button";
 import Skeleton from "../../Components/Skeleton";
+import { uploadImage } from "../../Api/Api";
 
 // ── Reusable field components ──────────────────────────────────────────────
 
@@ -151,16 +152,7 @@ export const ImageUpload = ({
     formData.append("image", file);
 
     try {
-      const response = await fetch("https://my-portfolio-backend-nine-psi.vercel.app/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Upload failed");
-      }
-
-      const data = await response.json();
+      const data = await uploadImage(formData);
       onChange(data.url);
     } catch (error) {
       console.error("Error uploading file:", error);

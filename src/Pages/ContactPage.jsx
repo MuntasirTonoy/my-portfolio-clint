@@ -16,7 +16,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { usePortfolio } from "../Pages/Admin/AdminContext";
 import Loading from "../Components/Loading";
 import Skeleton from "../Components/Skeleton";
-import { createReview } from "../Api/Api";
+import { createReview, uploadImage } from "../Api/Api";
 
 const ContactPage = () => {
   const { portfolioData, loading: globalLoading } = usePortfolio();
@@ -54,16 +54,7 @@ const ContactPage = () => {
     formData.append("image", file);
 
     try {
-      const response = await fetch("https://my-portfolio-backend-nine-psi.vercel.app/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Upload failed");
-      }
-
-      const data = await response.json();
+      const data = await uploadImage(formData);
       setReviewValue("avatar", data.url);
     } catch (error) {
       console.error("Error uploading file:", error);
