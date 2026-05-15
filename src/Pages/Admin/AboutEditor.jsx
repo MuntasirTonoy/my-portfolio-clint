@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAdmin } from "./AdminContext";
 import { SectionWrapper, Card, Field, Input, Textarea, SectionTitle, ImageUpload, RemoveBtn, AddBtn } from "./AdminComponents";
+import Skeleton, { CardSkeleton } from "../../Components/Skeleton";
 
 const AboutEditor = () => {
   const { portfolioData, updateSection, resetSection, loading } = useAdmin();
@@ -13,8 +14,10 @@ const AboutEditor = () => {
   }, [portfolioData?.about]);
 
   if (loading || !data) return (
-    <div className="flex justify-center py-20">
-      <span className="loading loading-spinner loading-lg text-spotify"></span>
+    <div className="space-y-6">
+      <Skeleton width="200px" height="32px" />
+      <CardSkeleton />
+      <CardSkeleton />
     </div>
   );
 
@@ -45,6 +48,15 @@ const AboutEditor = () => {
   };
   const addTimeline = () => setData((d) => ({ ...d, journey: [...(data.journey || []), { year: "", title: "", description: "", iconColor: "text-green-400" }] }));
   const removeTimeline = (i) => setData((d) => ({ ...d, journey: data.journey.filter((_, idx) => idx !== i) }));
+
+  // Certificates helpers
+  const setCert = (i, key, val) => {
+    const arr = [...(data.certificates || [])];
+    arr[i] = { ...arr[i], [key]: val };
+    setData((d) => ({ ...d, certificates: arr }));
+  };
+  const addCert = () => setData((d) => ({ ...d, certificates: [...(data.certificates || []), { title: "", image: "" }] }));
+  const removeCert = (i) => setData((d) => ({ ...d, certificates: (data.certificates || []).filter((_, idx) => idx !== i) }));
 
   return (
     <SectionWrapper
@@ -157,6 +169,30 @@ const AboutEditor = () => {
             </div>
           ))}
           <AddBtn onClick={addTimeline} label="+ Add Timeline Step" />
+        </div>
+      </Card>
+
+      {/* Certificates */}
+      <Card>
+        <SectionTitle>Certificates</SectionTitle>
+        <div className="space-y-4">
+          {(data.certificates || []).map((cert, i) => (
+            <div key={i} className="border border-base-300 rounded-xl p-4 space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="font-semibold text-sm">Certificate {i + 1}</span>
+                <RemoveBtn onClick={() => removeCert(i)} />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <Field label="Title">
+                  <Input value={cert.title} onChange={(e) => setCert(i, "title", e.target.value)} />
+                </Field>
+                <Field label="Image">
+                  <ImageUpload value={cert.image} onChange={(v) => setCert(i, "image", v)} />
+                </Field>
+              </div>
+            </div>
+          ))}
+          <AddBtn onClick={addCert} label="+ Add Certificate" />
         </div>
       </Card>
     </SectionWrapper>

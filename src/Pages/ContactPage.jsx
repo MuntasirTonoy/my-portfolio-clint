@@ -15,6 +15,7 @@ import { Link } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePortfolio } from "../Pages/Admin/AdminContext";
 import Loading from "../Components/Loading";
+import Skeleton from "../Components/Skeleton";
 import { createReview } from "../Api/Api";
 
 const ContactPage = () => {
@@ -36,8 +37,41 @@ const ContactPage = () => {
     register: registerReview,
     handleSubmit: handleSubmitReview,
     reset: resetReview,
+    setValue: setReviewValue,
+    watch: watchReview,
     formState: { errors: reviewErrors },
   } = useForm();
+
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const avatarUrl = watchReview("avatar");
+
+  const handleAvatarUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setAvatarUploading(true);
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const response = await fetch("https://my-portfolio-backend-nine-psi.vercel.app/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+
+      const data = await response.json();
+      setReviewValue("avatar", data.url);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      Swal.fire("Error", "Failed to upload image. Please try again.", "error");
+    } finally {
+      setAvatarUploading(false);
+    }
+  };
 
   if (globalLoading || !portfolioData?.contact) return <Loading fullScreen />;
 
@@ -340,13 +374,30 @@ const ContactPage = () => {
 
                 <div className="form-control">
                   <label className="label-text font-semibold mb-2">
-                    Profile Image Link
+                    Profile Image
                   </label>
-                  <input
-                    {...registerReview("avatar")}
-                    placeholder="https://images.com/your-photo.jpg"
-                    className="input input-bordered w-full"
-                  />
+                  <div className="flex items-center gap-3">
+                    <label className={`cursor-pointer flex items-center gap-2 px-4 py-2 bg-base-200/50 border border-dashed border-base-content/10 rounded-md text-sm hover:border-spotify transition-all font-medium ${avatarUploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                      {avatarUploading ? "Uploading..." : "📁 Upload Photo"}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleAvatarUpload}
+                        disabled={avatarUploading}
+                      />
+                    </label>
+                    {avatarUploading ? (
+                      <Skeleton width="48px" height="48px" rounded="rounded-md" />
+                    ) : avatarUrl ? (
+                      <img
+                        src={avatarUrl}
+                        alt="Preview"
+                        className="w-12 h-12 rounded-md object-cover border border-base-content/10"
+                      />
+                    ) : null}
+                  </div>
+                  <input type="hidden" {...registerReview("avatar")} />
                 </div>
 
                 <div className="form-control">

@@ -1,6 +1,7 @@
 import React from "react";
 import { FiSave, FiRefreshCw, FiEye, FiEyeOff } from "react-icons/fi";
 import Button from "../../Components/Button";
+import Skeleton from "../../Components/Skeleton";
 
 // ── Reusable field components ──────────────────────────────────────────────
 
@@ -150,7 +151,7 @@ export const ImageUpload = ({
     formData.append("image", file);
 
     try {
-      const response = await fetch("http://localhost:5000/api/upload", {
+      const response = await fetch("https://my-portfolio-backend-nine-psi.vercel.app/api/upload", {
         method: "POST",
         body: formData,
       });
@@ -177,7 +178,7 @@ export const ImageUpload = ({
         placeholder={label}
       />
       <div className="flex items-center gap-3">
-        <label className="cursor-pointer flex items-center gap-2 px-4 py-2 bg-base-200/50 border border-dashed border-base-content/10 rounded-md text-xs hover:border-spotify transition-all font-medium">
+        <label className={`cursor-pointer flex items-center gap-2 px-4 py-2 bg-base-200/50 border border-dashed border-base-content/10 rounded-md text-xs hover:border-spotify transition-all font-medium ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
           {uploading ? "Uploading..." : "📁 Upload from device"}
           <input
             type="file"
@@ -187,13 +188,15 @@ export const ImageUpload = ({
             disabled={uploading}
           />
         </label>
-        {value && (
+        {uploading ? (
+          <Skeleton width="48px" height="48px" rounded="rounded-md" />
+        ) : value ? (
           <img
             src={value}
             alt="Preview"
             className="w-12 h-12 rounded-md object-cover border border-base-content/10"
           />
-        )}
+        ) : null}
       </div>
     </div>
   );
