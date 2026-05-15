@@ -42,26 +42,21 @@ const ContactPage = () => {
     formState: { errors: reviewErrors },
   } = useForm();
 
-  const [avatarUploading, setAvatarUploading] = useState(false);
-  const avatarUrl = watchReview("avatar");
+  const [selectedAvatarFile, setSelectedAvatarFile] = useState(null);
+  const [avatarPreview, setAvatarPreview] = useState(null);
 
-  const handleAvatarUpload = async (e) => {
+  const handleAvatarUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    setAvatarUploading(true);
-    const formData = new FormData();
-    formData.append("image", file);
+    setSelectedAvatarFile(file);
+    setAvatarPreview(URL.createObjectURL(file));
+  };
 
-    try {
-      const data = await uploadImage(formData);
-      setReviewValue("avatar", data.url);
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      Swal.fire("Error", "Failed to upload image. Please try again.", "error");
-    } finally {
-      setAvatarUploading(false);
-    }
+  const removeAvatar = () => {
+    setSelectedAvatarFile(null);
+    setAvatarPreview(null);
+    setReviewValue("avatar", "");
   };
 
   if (globalLoading || !portfolioData?.contact) return <Loading fullScreen />;
@@ -124,7 +119,15 @@ const ContactPage = () => {
   const onReviewSubmit = async (data) => {
     setReviewLoading(true);
     try {
-      await createReview({ ...data, rating });
+      let finalAvatarUrl = data.avatar || "";
+      if (selectedAvatarFile) {
+        const formData = new FormData();
+        formData.append("image", selectedAvatarFile);
+        const uploadData = await uploadImage(formData);
+        finalAvatarUrl = uploadData.url;
+      }
+
+      await createReview({ ...data, rating, avatar: finalAvatarUrl });
       Swal.fire(
         "Thank You!",
         "Your review has been submitted and is now live!",
@@ -133,11 +136,19 @@ const ContactPage = () => {
       setIsReviewModalOpen(false);
       resetReview();
       setRating(5);
+      removeAvatar();
     } catch (error) {
       Swal.fire("Error", "Failed to submit review. Please try again.", "error");
     } finally {
       setReviewLoading(false);
     }
+  };
+
+  const closeReviewModal = () => {
+    setIsReviewModalOpen(false);
+    resetReview();
+    setRating(5);
+    removeAvatar();
   };
 
   const revealVariant = {
@@ -367,26 +378,37 @@ const ContactPage = () => {
                   <label className="label-text font-semibold mb-2">
                     Profile Image
                   </label>
-                  <div className="flex items-center gap-3">
-                    <label className={`cursor-pointer flex items-center gap-2 px-4 py-2 bg-base-200/50 border border-dashed border-base-content/10 rounded-md text-sm hover:border-spotify transition-all font-medium ${avatarUploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
-                      {avatarUploading ? "Uploading..." : "📁 Upload Photo"}
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={handleAvatarUpload}
-                        disabled={avatarUploading}
-                      />
-                    </label>
-                    {avatarUploading ? (
-                      <Skeleton width="48px" height="48px" rounded="rounded-md" />
-                    ) : avatarUrl ? (
-                      <img
-                        src={avatarUrl}
-                        alt="Preview"
-                        className="w-12 h-12 rounded-md object-cover border border-base-content/10"
-                      />
-                    ) : null}
+                  <div className="flex flex-col gap-3">
+                    {!avatarPreview ? (
+                      <label className="cursor-pointer flex flex-col items-center justify-center w-full h-32 bg-base-200/50 border-2 border-dashed border-base-content/10 rounded-md text-sm hover:border-spotify transition-all font-medium">
+                        <span className="text-2xl mb-2">📁</span>
+                        <span>Upload Photo</span>
+                        <span className="text-xs text-base-content/50 mt-1">Click to browse</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleAvatarUpload}
+                        />
+                      </label>
+                    ) : (
+                      <div className="relative w-full h-32 rounded-md overflow-hidden border border-base-content/10 group">
+                        <img
+                          src={avatarPreview}
+                          alt="Preview"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <button
+                            type="button"
+                            onClick={removeAvatar}
+                            className="btn btn-sm btn-error text-white font-bold"
+                          >
+                            Remove Photo
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <input type="hidden" {...registerReview("avatar")} />
                 </div>
@@ -412,7 +434,7 @@ const ContactPage = () => {
                 <div className="flex gap-3 mt-6">
                   <button
                     type="button"
-                    onClick={() => setIsReviewModalOpen(false)}
+                    onClick={closeReviewModal}
                     className="btn  border  hover:bg-red-500/80 hover:text-white"
                   >
                     Cancel
