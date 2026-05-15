@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   FaGithub,
   FaLinkedin,
@@ -15,6 +15,7 @@ import Loading from "../Components/Loading";
 
 const AboutPage = () => {
   const { portfolioData, loading } = usePortfolio();
+  const [selectedCert, setSelectedCert] = useState(null);
 
   if (loading || !portfolioData?.about) return <Loading fullScreen />;
 
@@ -28,7 +29,8 @@ const AboutPage = () => {
     socialLinks,
     professionalJourney,
     journey,
-    education
+    education,
+    certificates
   } = portfolioData.about;
 
   // common animation settings
@@ -42,8 +44,9 @@ const AboutPage = () => {
   };
 
   return (
-    <section className="min-h-screen font-sans p-6 md:p-12 max-w-7xl mx-auto mt-20">
-      {/* Two-column grid */}
+    <>
+      <section className="min-h-screen font-sans p-6 md:p-12 max-w-7xl mx-auto mt-20">
+        {/* Two-column grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 mb-16">
         {/* Left Card */}
         <motion.div
@@ -166,6 +169,43 @@ const AboutPage = () => {
         </div>
       </section>
 
+      {/* Certificates Section */}
+      {certificates && certificates.length > 0 && (
+        <section className="bg-base-300 rounded-xl p-8 mb-16">
+          <h2 className="text-xl sm:text-3xl md:text-3xl text-start border-b-1 pb-4 border-b-green-500 font-extrabold mb-8">
+            <span className="text-spotify ">My </span>Certificates
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+            {certificates.map((cert, index) => (
+              <motion.div
+                key={index}
+                className="bg-base-100 rounded-xl overflow-hidden transition hover:shadow-lg ring-1 ring-base-100 hover:ring-green-500 flex flex-col"
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false }}
+                custom={index * 0.2 + 0.2}
+              >
+                <div 
+                  className="h-48 overflow-hidden bg-base-200 cursor-pointer"
+                  onClick={() => setSelectedCert(cert)}
+                >
+                  <img
+                    src={cert.image || "https://via.placeholder.com/400x300?text=Certificate"}
+                    alt={cert.title}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                  />
+                </div>
+                <div className="p-5 flex-1 flex flex-col">
+                  <h3 className="font-bold text-lg mb-2">{cert.title}</h3>
+                  <p className="text-sm text-gray-400 mt-auto">{cert.institution}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Full-width Journey Timeline */}
       <section className="bg-base-300 rounded-xl md:p-8 p-6 mb-16">
         <h2 className="text-xl sm:text-3xl md:text-3xl text-start border-b-1 pb-4 border-b-green-500 font-extrabold mb-4">
@@ -198,6 +238,54 @@ const AboutPage = () => {
         </ul>
       </section>
     </section>
+
+      {/* Certificate Modal */}
+      <AnimatePresence>
+        {selectedCert && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedCert(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 cursor-zoom-out"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-5xl w-full max-h-[90vh] flex flex-col bg-base-100 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-base-300"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between p-4 border-b border-base-300 bg-base-200/50">
+                <div>
+                  <h3 className="font-bold text-xl">{selectedCert.title}</h3>
+                  <p className="text-sm text-gray-400">{selectedCert.institution}</p>
+                </div>
+                <button
+                  onClick={() => setSelectedCert(null)}
+                  className="p-2 hover:bg-base-300 rounded-full transition-colors"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              
+              {/* Image Container */}
+              <div className="flex-1 overflow-auto p-4 flex items-center justify-center bg-base-300/30">
+                <img
+                  src={selectedCert.image || "https://via.placeholder.com/800x600?text=Certificate"}
+                  alt={selectedCert.title}
+                  className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-md"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
