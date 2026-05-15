@@ -23,7 +23,7 @@ export const SectionWrapper = ({
         {onReset && (
           <button
             onClick={onReset}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-base-content/10 text-sm font-medium hover:bg-base-300 transition-all"
+            className="flex items-center gap-2 px-4 py-2 rounded-md border border-base-content/10 text-sm font-medium hover:bg-base-300 transition-all"
           >
             <FiRefreshCw size={14} /> Reset
           </button>
@@ -69,7 +69,7 @@ export const Input = ({
     value={value}
     onChange={onChange}
     placeholder={placeholder}
-    className="input input-bordered w-full bg-base-100/50 rounded-2xl focus:border-spotify/50 transition-all"
+    className="input input-bordered w-full bg-base-100/50 rounded-md focus:border-spotify/50 transition-all"
     {...rest}
   />
 );
@@ -83,7 +83,7 @@ export const PasswordInput = ({ value, onChange, placeholder, ...rest }) => {
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="input input-bordered w-full bg-base-100/50 rounded-2xl pr-12 focus:border-spotify/50 transition-all"
+        className="input input-bordered w-full bg-base-100/50 rounded-md pr-12 focus:border-spotify/50 transition-all"
         {...rest}
       />
       <button
@@ -103,7 +103,7 @@ export const Textarea = ({ value, onChange, placeholder, rows = 4 }) => (
     onChange={onChange}
     placeholder={placeholder}
     rows={rows}
-    className="textarea textarea-bordered w-full bg-base-100/50 rounded-2xl focus:border-spotify/50 transition-all"
+    className="textarea textarea-bordered w-full bg-base-100/50 rounded-md focus:border-spotify/50 transition-all"
   />
 );
 
@@ -139,15 +139,34 @@ export const ImageUpload = ({
   onChange,
   label = "Image URL or Upload",
 }) => {
-  const handleFileChange = (e) => {
+  const [uploading, setUploading] = React.useState(false);
+
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      onChange(reader.result);
-    };
-    reader.readAsDataURL(file);
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+
+      const data = await response.json();
+      onChange(data.url);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      alert("Failed to upload image.");
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (
@@ -158,20 +177,21 @@ export const ImageUpload = ({
         placeholder={label}
       />
       <div className="flex items-center gap-3">
-        <label className="cursor-pointer flex items-center gap-2 px-4 py-2 bg-base-200/50 border border-dashed border-base-content/10 rounded-xl text-xs hover:border-spotify transition-all font-medium">
-          📁 Upload from device
+        <label className="cursor-pointer flex items-center gap-2 px-4 py-2 bg-base-200/50 border border-dashed border-base-content/10 rounded-md text-xs hover:border-spotify transition-all font-medium">
+          {uploading ? "Uploading..." : "📁 Upload from device"}
           <input
             type="file"
             accept="image/*"
             className="hidden"
             onChange={handleFileChange}
+            disabled={uploading}
           />
         </label>
         {value && (
           <img
             src={value}
             alt="Preview"
-            className="w-12 h-12 rounded-xl object-cover border border-base-content/10"
+            className="w-12 h-12 rounded-md object-cover border border-base-content/10"
           />
         )}
       </div>

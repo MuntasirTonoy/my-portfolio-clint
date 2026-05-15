@@ -102,7 +102,7 @@ const AdminLogin = () => {
                     setError("");
                   }}
                   placeholder="admin@example.com"
-                  className="w-full pl-10 pr-4 py-3 bg-base-200 border border-base-300 rounded-xl text-sm focus:outline-none focus:border-[#02b677] focus:ring-1 focus:ring-[#02b677] transition-all"
+                  className="w-full pl-10 pr-4 py-3 bg-base-200 border border-base-300 rounded-md text-sm focus:outline-none focus:border-[#02b677] focus:ring-1 focus:ring-[#02b677] transition-all"
                   required
                 />
               </div>
@@ -126,7 +126,7 @@ const AdminLogin = () => {
                     setError("");
                   }}
                   placeholder="Enter admin password"
-                  className="w-full pl-10 pr-10 py-3 bg-base-200 border border-base-300 rounded-xl text-sm focus:outline-none focus:border-[#02b677] focus:ring-1 focus:ring-[#02b677] transition-all"
+                  className="w-full pl-10 pr-10 py-3 bg-base-200 border border-base-300 rounded-md text-sm focus:outline-none focus:border-[#02b677] focus:ring-1 focus:ring-[#02b677] transition-all"
                   required
                 />
                 <button
@@ -153,7 +153,7 @@ const AdminLogin = () => {
               id="admin-login-btn"
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-xl font-bold text-sm tracking-wider transition-all duration-300 relative overflow-hidden"
+              className="w-full py-3 rounded-md font-bold text-sm tracking-wider transition-all duration-300 relative overflow-hidden"
               style={{
                 background: loading
                   ? "rgba(2,182,119,0.5)"

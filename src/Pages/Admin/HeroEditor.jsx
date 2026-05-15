@@ -64,10 +64,10 @@ const HeroEditor = () => {
           {(data.roleTags || []).map((tag, i) => (
             <div key={i} className="flex gap-2">
               <Input value={tag} onChange={(e) => setTag(i, e.target.value)} placeholder="Role name" />
-              <button onClick={() => removeTag(i)} className="px-3 py-1.5 text-xs font-semibold text-red-400 bg-red-500/10 rounded-xl hover:bg-red-500/20">✕</button>
+              <button onClick={() => removeTag(i)} className="px-3 py-1.5 text-xs font-semibold text-red-400 bg-red-500/10 rounded-md hover:bg-red-500/20">✕</button>
             </div>
           ))}
-          <button onClick={addTag} className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border border-dashed border-[#02b677]/50 text-[#02b677] hover:bg-[#02b677]/10 transition-all">
+          <button onClick={addTag} className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold border border-dashed border-[#02b677]/50 text-[#02b677] hover:bg-[#02b677]/10 transition-all">
             + Add Role Tag
           </button>
         </div>

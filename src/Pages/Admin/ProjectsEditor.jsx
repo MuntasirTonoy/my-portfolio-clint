@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useAdmin } from "./AdminContext";
 import { SectionWrapper, Card, Field, Input, Textarea, SectionTitle, RemoveBtn, AddBtn, ImageUpload } from "./AdminComponents";
+import { WithContext as ReactTags } from 'react-tag-input';
+
+const KeyCodes = {
+  comma: 188,
+  enter: 13,
+};
+
+const delimiters = [KeyCodes.comma, KeyCodes.enter];
+
+// Common tech suggestions
+const suggestions = [
+  "React", "Node.js", "Express", "MongoDB", "Tailwind CSS", "JavaScript", 
+  "TypeScript", "Next.js", "Firebase", "Redux", "HTML", "CSS", "Vite", 
+  "Python", "Django", "PostgreSQL", "MySQL", "AWS", "Docker"
+].map(tech => ({ id: tech, text: tech }));
 
 const defaultProject = {
   image: "",
@@ -93,10 +108,10 @@ const ProjectsEditor = () => {
         <Card key={proj._id || i}>
           <div className="flex items-center justify-between cursor-pointer" onClick={() => setExpanded(expanded === i ? null : i)}>
             <div className="flex items-center gap-3">
-              {proj.image && <img src={proj.image} alt="" className="w-12 h-10 rounded-lg object-cover" onError={(e) => (e.target.style.display = "none")} />}
+              {proj.image && <img src={proj.image} alt="" className="w-12 h-10 rounded-md object-cover" onError={(e) => (e.target.style.display = "none")} />}
               <div>
                 <p className="font-bold text-sm">{proj.title}</p>
-                <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${proj.featured ? "bg-[#02b677]/20 text-[#02b677]" : "bg-base-200 text-base-content/40"}`}>
+                <span className={`text-xs px-2 py-0.5 rounded-md font-semibold ${proj.featured ? "bg-[#02b677]/20 text-[#02b677]" : "bg-base-200 text-base-content/40"}`}>
                   {proj.featured ? "⭐ Featured" : "Not featured"}
                 </span>
               </div>
@@ -119,7 +134,7 @@ const ProjectsEditor = () => {
                 </Field>
                 <Field label="Status">
                   <select value={proj.status} onChange={(e) => setProject(i, "status", e.target.value)}
-                    className="w-full px-4 py-2.5 bg-base-200 border border-base-300 rounded-xl text-sm focus:outline-none focus:border-[#02b677]">
+                    className="w-full px-4 py-2.5 bg-base-200 border border-base-300 rounded-md text-sm focus:outline-none focus:border-[#02b677]">
                     <option value="completed">Completed</option>
                     <option value="working">In Progress</option>
                     <option value="planned">Planned</option>
@@ -138,8 +153,40 @@ const ProjectsEditor = () => {
                     <span className="text-sm">Show in Featured section</span>
                   </label>
                 </Field>
-                <Field label="Tags (comma separated)">
-                  <Input value={proj.tags?.join(", ") ?? ""} onChange={(e) => setArrayField(i, "tags", e.target.value)} placeholder="react, mern, api" />
+                <Field label="Tags">
+                  <div className="react-tags-wrapper">
+                    <ReactTags
+                      tags={(proj.tags || []).map(t => ({ id: t, text: t }))}
+                      suggestions={suggestions}
+                      handleDelete={(i) => {
+                        const newTags = [...(proj.tags || [])];
+                        newTags.splice(i, 1);
+                        setProject(i, "tags", newTags);
+                      }}
+                      handleAddition={(tag) => {
+                        setProject(i, "tags", [...(proj.tags || []), tag.text]);
+                      }}
+                      handleDrag={(tag, currPos, newPos) => {
+                        const newTags = [...(proj.tags || [])];
+                        newTags.splice(currPos, 1);
+                        newTags.splice(newPos, 0, tag.text);
+                        setProject(i, "tags", newTags);
+                      }}
+                      delimiters={delimiters}
+                      inputFieldPosition="bottom"
+                      placeholder="Add tag and press Enter"
+                      classNames={{
+                        tags: 'flex flex-col gap-2',
+                        tagInput: 'mt-2',
+                        tagInputField: 'input input-bordered w-full bg-base-100/50 rounded-md focus:border-spotify/50 transition-all text-sm',
+                        selected: 'flex flex-wrap gap-2',
+                        tag: 'flex items-center gap-1 bg-[#02b677]/20 text-[#02b677] px-3 py-1 rounded-md text-xs font-semibold',
+                        remove: 'cursor-pointer ml-1 font-bold text-red-500 hover:text-red-700',
+                        suggestions: 'absolute z-10 mt-1 w-full bg-base-200 border border-base-300 rounded-md shadow-lg',
+                        activeSuggestion: 'bg-base-300 cursor-pointer px-4 py-2 text-sm',
+                      }}
+                    />
+                  </div>
                 </Field>
               </div>
 
@@ -150,8 +197,34 @@ const ProjectsEditor = () => {
               <SectionTitle>Tech Stack</SectionTitle>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 {["frontend", "backend", "other"].map((key) => (
-                  <Field key={key} label={key.charAt(0).toUpperCase() + key.slice(1)} hint="comma separated">
-                    <Input value={(proj.tech?.[key] ?? []).join(", ")} onChange={(e) => setNested(i, "tech", key, e.target.value.split(",").map((s) => s.trim()).filter(Boolean))} />
+                  <Field key={key} label={key.charAt(0).toUpperCase() + key.slice(1)}>
+                    <div className="react-tags-wrapper">
+                      <ReactTags
+                        tags={(proj.tech?.[key] || []).map(t => ({ id: t, text: t }))}
+                        suggestions={suggestions}
+                        handleDelete={(tagIndex) => {
+                          const newTech = [...(proj.tech?.[key] || [])];
+                          newTech.splice(tagIndex, 1);
+                          setNested(i, "tech", key, newTech);
+                        }}
+                        handleAddition={(tag) => {
+                          setNested(i, "tech", key, [...(proj.tech?.[key] || []), tag.text]);
+                        }}
+                        delimiters={delimiters}
+                        inputFieldPosition="bottom"
+                        placeholder={`Add ${key} tech`}
+                        classNames={{
+                          tags: 'flex flex-col gap-2',
+                          tagInput: 'mt-2',
+                          tagInputField: 'input input-bordered w-full bg-base-100/50 rounded-md focus:border-spotify/50 transition-all text-sm',
+                          selected: 'flex flex-wrap gap-2',
+                          tag: 'flex items-center gap-1 bg-base-200 text-base-content/70 px-2 py-1 rounded-md text-xs font-medium border border-base-300',
+                          remove: 'cursor-pointer ml-1 font-bold hover:text-red-500',
+                          suggestions: 'absolute z-10 mt-1 w-full bg-base-200 border border-base-300 rounded-md shadow-lg',
+                          activeSuggestion: 'bg-base-300 cursor-pointer px-4 py-2 text-sm',
+                        }}
+                      />
+                    </div>
                   </Field>
                 ))}
               </div>
@@ -161,7 +234,7 @@ const ProjectsEditor = () => {
                 {(proj.keyFeature || []).map((f, fi) => (
                   <div key={fi} className="flex gap-2">
                     <Input value={f} onChange={(e) => setFeature(i, fi, e.target.value)} />
-                    <button onClick={() => removeFeature(i, fi)} className="px-3 text-red-400 bg-red-500/10 rounded-xl hover:bg-red-500/20">✕</button>
+                    <button onClick={() => removeFeature(i, fi)} className="px-3 text-red-400 bg-red-500/10 rounded-md hover:bg-red-500/20">✕</button>
                   </div>
                 ))}
                 <AddBtn onClick={() => addFeature(i)} label="+ Add Feature" />

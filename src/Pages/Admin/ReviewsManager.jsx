@@ -92,13 +92,13 @@ const ReviewsManager = () => {
                   <img 
                     src={review.avatar} 
                     alt={review.name} 
-                    className="w-12 h-12 rounded-xl object-cover border border-base-content/10"
+                    className="w-12 h-12 rounded-md object-cover border border-base-content/10"
                   />
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-sm truncate">{review.name}</h4>
                     <p className="text-xs text-base-content/40 truncate">{review.role}</p>
                   </div>
-                  <div className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${review.isPublished ? 'bg-spotify/20 text-spotify' : 'bg-base-content/10 text-base-content/40'}`}>
+                  <div className={`text-[10px] px-2 py-0.5 rounded-md font-bold uppercase ${review.isPublished ? 'bg-spotify/20 text-spotify' : 'bg-base-content/10 text-base-content/40'}`}>
                     {review.isPublished ? 'LIVE' : 'HIDDEN'}
                   </div>
                 </div>
@@ -110,7 +110,7 @@ const ReviewsManager = () => {
                 <div className="flex gap-2 pt-4 border-t border-base-content/5">
                   <button
                     onClick={() => toggleStatus(review._id, review.isPublished)}
-                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-bold transition-all ${
+                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-xs font-bold transition-all ${
                       review.isPublished 
                         ? 'bg-base-200 hover:bg-base-300 text-base-content/60' 
                         : 'bg-spotify/10 hover:bg-spotify/20 text-spotify'
@@ -120,7 +120,7 @@ const ReviewsManager = () => {
                   </button>
                   <button
                     onClick={() => handleDelete(review._id)}
-                    className="px-4 py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-500 transition-all"
+                    className="px-4 py-2 rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-500 transition-all"
                     title="Delete Permanently"
                   >
                     <FiTrash2 />
