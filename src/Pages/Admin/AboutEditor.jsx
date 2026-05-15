@@ -55,7 +55,7 @@ const AboutEditor = () => {
     arr[i] = { ...arr[i], [key]: val };
     setData((d) => ({ ...d, certificates: arr }));
   };
-  const addCert = () => setData((d) => ({ ...d, certificates: [...(data.certificates || []), { title: "", image: "" }] }));
+  const addCert = () => setData((d) => ({ ...d, certificates: [...(data.certificates || []), { title: "", institution: "", image: "" }] }));
   const removeCert = (i) => setData((d) => ({ ...d, certificates: (data.certificates || []).filter((_, idx) => idx !== i) }));
 
   return (
@@ -159,8 +159,31 @@ const AboutEditor = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <Field label="Year"><Input value={item.year} onChange={(e) => setTimeline(i, "year", e.target.value)} /></Field>
                 <Field label="Title"><Input value={item.title} onChange={(e) => setTimeline(i, "title", e.target.value)} /></Field>
-                <Field label="Icon Color (Tailwind class)" hint="e.g. text-green-400, text-blue-400">
-                  <Input value={item.iconColor} onChange={(e) => setTimeline(i, "iconColor", e.target.value)} />
+                <Field label="Timeline Icon Color" hint="Select a color for the timeline dot">
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    {[
+                      "text-green-500",
+                      "text-blue-500",
+                      "text-red-500",
+                      "text-yellow-500",
+                      "text-purple-500",
+                      "text-pink-500",
+                      "text-orange-500",
+                      "text-teal-500"
+                    ].map((colorClass) => (
+                      <button
+                        key={colorClass}
+                        type="button"
+                        onClick={() => setTimeline(i, "iconColor", colorClass)}
+                        className={`w-8 h-8 rounded-full flex items-center justify-center bg-base-200 border-2 transition-all ${
+                          item.iconColor === colorClass ? "border-green-500 scale-110" : "border-transparent hover:scale-110"
+                        }`}
+                        title={colorClass.replace('text-', '').replace('-500', '')}
+                      >
+                        <span className={`text-xl ${colorClass}`}>●</span>
+                      </button>
+                    ))}
+                  </div>
                 </Field>
               </div>
               <Field label="Description">
@@ -186,6 +209,11 @@ const AboutEditor = () => {
                 <Field label="Title">
                   <Input value={cert.title} onChange={(e) => setCert(i, "title", e.target.value)} />
                 </Field>
+                <Field label="Institution">
+                  <Input value={cert.institution} onChange={(e) => setCert(i, "institution", e.target.value)} />
+                </Field>
+              </div>
+              <div className="mt-3">
                 <Field label="Image">
                   <ImageUpload value={cert.image} onChange={(v) => setCert(i, "image", v)} />
                 </Field>
